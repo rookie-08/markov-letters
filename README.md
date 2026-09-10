@@ -16,6 +16,14 @@ Using Python to create a second-order markov chain that can generate words.
 
     - A token can be `"END"`, which causes the markov chain to terminate
 
+- How a token map is stored
+
+    - Stored as a list
+
+    - Even-numbered indices `[0], [2], ...` have a token element `"s" or "sc"`
+
+    - The element following a token element is a unique probability table
+
 - How a markov chain is stored
 
     - Stored as a list
