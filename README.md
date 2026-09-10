@@ -33,3 +33,36 @@ Using Python to create a second-order markov chain that can generate words.
     - `markov[1]`: A probability list of first-order tokens (i.e. the second character of a word).
 
     - `markov[2]`: A probability list of second-order tokens.
+
+- How a markov chain is written
+
+    - `## TEXT` Serves as a flag to help adjust the code's behavior as it reads the text
+
+    - Probability lists are stored on a linear line
+
+    - Token maps are stored on different lines; each line is an element
+
+    - For the following example, these will appear (but not in the actual .txt file):
+
+        - `//` serves as an artificial comment line
+
+        - `...` denotes redundant information
+
+    ```
+    ## ORDER 0
+    a 0.023 b 0.034 c 0.068 ...
+    ## ORDER 1
+    a
+    a 0.023 b 0.034 c 0.068 ...
+    b
+    a 0.023 b 0.034 c 0.068 ...
+    ...
+    ## ORDER 2
+    aa
+    a 0.023 b 0.034 c 0.068 ...
+    ab
+    a 0.023 b 0.034 c 0.068 ...
+    ac
+    a 0.023 b 0.034 c 0.068 ...
+    ...
+    ```
