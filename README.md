@@ -36,7 +36,7 @@ Using Python to create a second-order markov chain that can generate words.
 
 - How a markov chain is written
 
-    - `## TEXT` Serves as a flag to help adjust the code's behavior as it reads the text
+    - `# TEXT` Serves as a flag to help adjust the code's behavior as it reads the text
 
     - Probability lists are stored on a linear line
 
@@ -49,15 +49,15 @@ Using Python to create a second-order markov chain that can generate words.
         - `...` denotes redundant information
 
     ```
-    ## ORDER 0
+    # ORDER 0
     a 0.023 b 0.034 c 0.068 ...
-    ## ORDER 1
+    # ORDER 1
     a
     a 0.023 b 0.034 c 0.068 ...
     b
     a 0.023 b 0.034 c 0.068 ...
     ...
-    ## ORDER 2
+    # ORDER 2
     aa
     a 0.023 b 0.034 c 0.068 ...
     ab

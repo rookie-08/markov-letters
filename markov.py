@@ -29,6 +29,28 @@ def read_network():
     """
     Reads "markov_data.txt" and returns a stored markov chain.
     """
+
+    # SETUP
+    # The markov chain to return
+    # The current token map to store into a markov[#]
+
+    # CODE
+    # Open the file through a `with as`
+    # Use next() a few times, probably
+    # Run a for loop on the file
+    # Store the second line as markov[0] = probability list
+    # After the third line, the real stuff begins
+    # Reading a line
+        # If there's a #
+            # add the current token map to markov IF the current token map isn't empty
+            # clear the current token map
+        # Otherwise
+            # read the line
+            # if the len(split) = 1?
+                # add a key
+            # otherwise
+                # split and add a probability list
+
     ...
 
 def make_markov_network():
