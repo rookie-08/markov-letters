@@ -6,6 +6,10 @@ Create a second-order markov chain that can generate words.
 """
 Things to do:
 
+    - How is a markov list stored as a text file?
+
+    - How is a markov list generated?
+
     - Outline functions, top-down
 
     - Verify that there are no missing invokes
