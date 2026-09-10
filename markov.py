@@ -1,6 +1,16 @@
 """
-Using Python to create a second-order markov chain that can generate words.
+Create a second-order markov chain that can generate words.
 @author Rookie
+"""
+
+"""
+Things to do:
+
+    - Outline functions, top-down
+
+    - Verify that there are no missing invokes
+
+    - Create tests + Program functions, down-top
 """
 
 def write_network(markov_list):
@@ -31,7 +41,15 @@ def choose_random_token(probability_list):
     """
     Chooses a random token from `probability_list`.
     """
-    ...
+
+    # Generate a random number of set [0.0, 1.0)
+    # Generate a "right boundary" count
+        # It will be 1.0 at the end of the loop
+
+    while False: # should instead be a for loop with an index
+        # Add the element of `index + 1` (the probability) to the right boundary
+        # If the earlier-set random number is NOW less than the right boundary, return element of `index`
+        ...
 
 def use_markov_network(markov_list):
     """
