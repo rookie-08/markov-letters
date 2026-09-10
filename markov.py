@@ -25,7 +25,20 @@ def write_network(markov_list):
     """
     ...
 
-def read_network():
+def read_network_file_each_line(markov_list, line):
+    # CODE
+    # If there's a #
+        # Append a new token map to the markov chain
+    # Otherwise
+        # If the len(split) == 1
+            # Add the line to the most recent token map
+        # Else
+            # Split the line into a probability list and add it to the most recent token map
+    # Return the markov_list, just in case
+    # A refactoring may need to remove the above line
+    ...
+
+def read_network_file():
     """
     Reads "markov_data.txt" and returns a stored markov chain.
     """
@@ -34,23 +47,12 @@ def read_network():
     # The markov chain to return
     # The current token map to store into a markov[#]
 
-    # CODE
+    # DODE
     # Open the file through a `with as`
-    # Use next() a few times, probably
-    # Run a for loop on the file
-    # Store the second line as markov[0] = probability list
-    # After the third line, the real stuff begins
-    # Reading a line
-        # If there's a #
-            # add the current token map to markov IF the current token map isn't empty
-            # clear the current token map
-        # Otherwise
-            # read the line
-            # if the len(split) = 1?
-                # add a key
-            # otherwise
-                # split and add a probability list
-
+        # Run a for loop on the file
+            # Strip the line for cleanliness
+            # Invoke `markov_chain = read_network_file_each_line` to prevent overnesting
+    # Return markov list
     ...
 
 def make_markov_network():
@@ -124,7 +126,7 @@ def main():
         # If neither is used, repeat
         ...
     # If make, invoke `write_network` and `make_markov_network`
-    # If use, invoke `read_network`, `use_markov_network`, and `print`
+    # If use, invoke `read_network_file`, `use_markov_network`, and `print`
     ...
 
 if (__name__ == "__main__"):
