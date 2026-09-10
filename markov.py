@@ -1,5 +1,6 @@
 """
-
+Using Python to create a second-order markov chain that can generate words.
+@author Rookie
 """
 
 def write_network(markov_list):
