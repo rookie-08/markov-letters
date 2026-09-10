@@ -15,6 +15,10 @@ Things to do:
     - Verify that there are no missing invokes
 
     - Create tests + Program functions, down-top
+
+    - Polish README.md, the bullet points for notes look weird
+
+    - Add explanations and methodology to README.md
 """
 
 def write_network(markov_list):
