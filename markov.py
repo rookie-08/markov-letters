@@ -27,15 +27,24 @@ def read_network():
 
 def make_markov_network():
     """
-    Retruns a [markov chain] after reading a hardcoded text file.
+    Returns a [markov chain] after reading a hardcoded text file.
     """
     ...
 
-def find_probability_list(markov_list, order):
+def find_probability_list(markov_list, order, token):
     """
     Chooses a token map from `markov_list` based on the `order`th order of tokens.
+
+    Uses `token` as the key.
     """
-    ...
+
+    # Start analyzing markov_list[order]
+
+    while False: # for loop with index and skip 2
+        # Does `index` have the `token`?
+        # If so, return the probability list at `index + 1`
+        ...
+    # Throw up
 
 def choose_random_token(probability_list):
     """
@@ -46,7 +55,7 @@ def choose_random_token(probability_list):
     # Generate a "right boundary" count
         # It will be 1.0 at the end of the loop
 
-    while False: # should instead be a for loop with an index
+    while False: # should instead be a for loop with an index, as well as skip 2
         # Add the element of `index + 1` (the probability) to the right boundary
         # If the earlier-set random number is NOW less than the right boundary, return element of `index`
         ...
