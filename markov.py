@@ -6,7 +6,7 @@ Create a second-order markov chain that can generate words.
 """
 Things to do:
 
-    - How is a markov list generated?
+    - How is a markov chain generated?
 
     - Outline functions, top-down
 
@@ -23,7 +23,8 @@ Things to do:
         - How does the markov chain work? (use terminology to update code)
 """
 
-def analyze_word_to_tokens(word):
+# Converting 
+def convert_word_to_tokens(word):
     """
     Takes a string `word` and does a second order markov analysis on it.
 
@@ -44,13 +45,57 @@ def analyze_word_to_tokens(word):
     # Return the list.
     ...
 
-def get_markov_chain_item(markov_list, order, key, token):
+def covert_probability_list_to_string(probability_list):
     """
-    Returns a numerical element from `markov_list`, specifically from the
+    Takes a stored `probability_list` and returns a string representation of it.
+    """
+    # Initialize the representative string.
+
+    while False: # For loop
+        # Use str() to add a " " to the string.
+        # If it's not the end of the list, add " ".
+        ...
+    
+    # Return the string.
+    ...
+
+def convert_fileline_to_chaindata(markov_chain, line):
+    # CODE
+    # If there's a #
+        # Append a new token map to the markov chain
+    # Otherwise
+        # If the len(split) == 1
+            # Add the line to the most recent token map
+        # Else
+            # Split the line into a probability list and add it to the most recent token map
+    # Return the markov_chain, just in case
+    # A refactoring may need to remove the above line
+    ...
+
+# Manipulation
+def get_probability_list(markov_chain, order, token):
+    """
+    Chooses a token map from `markov_chain` based on the `order`th order of tokens.
+
+    Uses `token` as the key.
+    """
+
+    # Start analyzing markov_chain[order]
+
+    while False: # for loop with index and skip 2
+        # Does `index` have the `token`?
+        # If so, return the probability list at `index + 1`
+        ...
+    # Throw up
+    ...
+
+def get_property(markov_chain, order, key, token):
+    """
+    Returns a numerical element from `markov_chain`, specifically from the
     `order`th order, accessing with a context key `key`, for the probability of
     `token`.
     """
-    # Access the ordered token map of the markov list.
+    # Access the ordered token map of the markov chain.
     # Run a for loop on the token map.
         # Did you find the corresponding key in the token map?
             # Run a for loop on the corresponding probability list.
@@ -59,12 +104,12 @@ def get_markov_chain_item(markov_list, order, key, token):
     # Return nothing.
     ...
 
-def set_markov_chain_item(markov_list, order, key, token, value):
+def set_property(markov_chain, order, key, token, value):
     """
-    Sets an element's value of a `markov_list` given an `order`, context `key`,
+    Sets an element's value of a `markov_chain` given an `order`, context `key`,
     and the `token` which needs its numerical element set to `value`.
     """
-    # Access the ordered token map of the markov list.
+    # Access the ordered token map of the markov chain.
     # Run a for loop on the token map.
         # Did you find the corresponding key in the token map?
             # Run a for loop on the corresponding probability list.
@@ -74,23 +119,24 @@ def set_markov_chain_item(markov_list, order, key, token, value):
     # Return False.
     ...
 
-def increment_markov_chain_item(markov_list, order, key, token):
+def add_property(markov_chain, order, key, token):
     """
-    Uses `set_markov_chain_item` to increase a numerical element by 1.
+    Uses `set_property` to increase a numerical element by 1.
     """
-    # Store a variable through invoking `get_markov_chain_item`.
+    # Store a variable through invoking `get_property`.
     # Increment the variable by 1.
-    # Invoke `set_markov_chain_item` with the new variable.
+    # Invoke `set_property` with the new variable.
     ...
 
-def assimilate_into_markov_chain(markov_list, token_analysis):
+# Chain Manipulation
+def add_tokens(markov_chain, token_analysis):
     """
-    Uses the list `token_analysis`, then adds its frequency (int) to `markov_list`.
+    Uses the list `token_analysis`, then adds its frequency (int) to `markov_chain`.
     """
     # Is the analysis at least two elements long?
-        # Invoke `increment_markov_chain_item` for order 0, key START, token (analysis[1]).
+        # Invoke `add_property` for order 0, key START, token (analysis[1]).
     # Is the analysis at least four elements long?
-        # Invoke `increment_markov_chain_item` for order 1, key a[2], token a[3].
+        # Invoke `add_property` for order 1, key a[2], token a[3].
     # Is the analysis at least six elements long?
         # Run a modified for loop
             # For each second-ordered token, invoke increment, order 2, key a[n], token a[n + 1].
@@ -118,107 +164,19 @@ def normalize_probability_list(probability_list):
     # Return the new probability list.
     ...
 
-def normalize_markov_list(markov_list):
+def normalize_markov_chain(markov_chain):
     """
-    Normalizes a markov list's probability lists.
+    Normalizes a markov chain's probability lists.
     """
-    # Run a for loop on markov_list to get its token maps.
+    # Run a for loop on markov_chain to get its token maps.
         # Run a modified for loop on each token map to get its probability lists.
             # Invoke `normalize_probability_list` to set each probability list.
-
-    # Return the markov list.
-    ...
-
-def make_markov_network():
-    """
-    Returns a [markov chain] after reading a hardcoded text file.
-    """
-
-    # Create a markov chain: a list of three token maps.
-
-    # Use `with as` to open the file.
-        # Run a for loop on each line of the file.
-            # Strips each line.
-            # Get an analysis of a word's patterns through `analyze_word_to_tokens`.
-            # Use the analysis by invoking `assimilate_into_markov_chain`.
-    
-    # Normalize the frequency of the markov chain.
 
     # Return the markov chain.
     ...
 
-def write_probability_list(probability_list):
-    """
-    Takes a stored `probability_list` and returns a string representation of it.
-    """
-    # Initialize the representative string.
-
-    while False: # For loop
-        # Use str() to add a " " to the string.
-        # If it's not the end of the list, add " ".
-        ...
-    
-    # Return the string.
-
-def write_network(markov_list):
-    """
-    Takes a stored `markov_list` and overwrites it to "markov_data.txt"
-    """
-
-    # initialize a string to be stored into a file.
-
-    while False: # for each order in the markov chain:
-        # Write the double hashtag header
-        # Write each element of each token map on a separate line, partly through `write_probability_list`
-        ...
-    ...
-
-def read_network_file_each_line(markov_list, line):
-    # CODE
-    # If there's a #
-        # Append a new token map to the markov chain
-    # Otherwise
-        # If the len(split) == 1
-            # Add the line to the most recent token map
-        # Else
-            # Split the line into a probability list and add it to the most recent token map
-    # Return the markov_list, just in case
-    # A refactoring may need to remove the above line
-    ...
-
-def read_network_file():
-    """
-    Reads "markov_data.txt" and returns a stored markov chain.
-    """
-
-    # SETUP
-    # The markov chain to return
-    # The current token map to store into a markov[#]
-
-    # DODE
-    # Open the file through a `with as`
-        # Run a for loop on the file
-            # Strip the line for cleanliness
-            # Invoke `markov_chain = read_network_file_each_line` to prevent overnesting
-    # Return markov list
-    ...
-
-def find_probability_list(markov_list, order, token):
-    """
-    Chooses a token map from `markov_list` based on the `order`th order of tokens.
-
-    Uses `token` as the key.
-    """
-
-    # Start analyzing markov_list[order]
-
-    while False: # for loop with index and skip 2
-        # Does `index` have the `token`?
-        # If so, return the probability list at `index + 1`
-        ...
-    # Throw up
-
-def choose_random_token(probability_list):
+# Application
+def generate_token(probability_list):
     """
     Chooses a random token from `probability_list`.
     """
@@ -232,9 +190,58 @@ def choose_random_token(probability_list):
         # If the earlier-set random number is NOW less than the right boundary, return element of `index`
         ...
 
-def use_markov_network(markov_list):
+# Higher Order Actions
+def from_file():
     """
-    Returns a String generated by a [markov chain] `markov_list`.
+    Reads "markov_data.txt" and returns a stored markov chain.
+    """
+
+    # SETUP
+    # The markov chain to return
+    # The current token map to store into a markov[#]
+
+    # DODE
+    # Open the file through a `with as`
+        # Run a for loop on the file
+            # Strip the line for cleanliness
+            # Invoke `markov_chain = convert_fileline_to_chaindata` to prevent overnesting
+    # Return markov chain
+    ...
+
+def to_file(markov_chain):
+    """
+    Takes a stored `markov_chain` and overwrites it to "markov_data.txt"
+    """
+
+    # initialize a string to be stored into a file.
+
+    while False: # for each order in the markov chain:
+        # Write the double hashtag header
+        # Write each element of each token map on a separate line, partly through `covert_probability_list_to_string`
+        ...
+    ...
+
+def create_markov_chain():
+    """
+    Returns a [markov chain] after reading a hardcoded text file.
+    """
+
+    # Create a markov chain: a list of three token maps.
+
+    # Use `with as` to open the file.
+        # Run a for loop on each line of the file.
+            # Strips each line.
+            # Get an analysis of a word's patterns through `convert_word_to_tokens`.
+            # Use the analysis by invoking `add_tokens`.
+    
+    # Normalize the frequency of the markov chain.
+
+    # Return the markov chain.
+    ...
+
+def generate_string(markov_chain):
+    """
+    Returns a String generated by a [markov chain] `markov_chain`.
     """
 
     # SETUP
@@ -242,18 +249,18 @@ def use_markov_network(markov_list):
     # Var: Context variable to select tokens
 
     # CODE
-    # Choose a probability list from markov_list[0] using `find_probability_list`
-    # Invoke `choose_random_token` for the probability list, then get the token
+    # Choose a probability list from markov_chain[0] using `get_probability_list`
+    # Invoke `generate_token` for the probability list, then get the token
     # If "END" has been pulled, return ""
     # Set the context to the first character
-    # Choose a probability list from markov_list[1]
-    # Invoke `choose_random_token` for the probability list, then get the token
+    # Choose a probability list from markov_chain[1]
+    # Invoke `generate_token` for the probability list, then get the token
     # If "END", return "#"
     # Set the context to the first and second character
     
     while False: # Loop for the second order Markov Chain
-        # Choose a probability list from markov_list[2]
-        # Invoke `choose_random_token` for the probability list, then get the token
+        # Choose a probability list from markov_chain[2]
+        # Invoke `generate_token` for the probability list, then get the token
         # If "END", return string
         # Set the context to the second character of the old one, and the new character combined
         ...
@@ -268,8 +275,8 @@ def main():
         # Prompt the user to type "make" or "use"
         # If neither is used, repeat
         ...
-    # If make, invoke `write_network` and `make_markov_network`
-    # If use, invoke `read_network_file`, `use_markov_network`, and `print`
+    # If make, invoke `to_file` and `create_markov_chain`
+    # If use, invoke `from_file`, `generate_string`, and `print`
     ...
 
 if (__name__ == "__main__"):
