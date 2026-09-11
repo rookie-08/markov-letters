@@ -247,4 +247,4 @@ def test_convert_filename_to_chaindata_multi():
 
     # analyze
     assert (len(markov_chain[1]) == 2), "Token map did not grow"
-    assert (markov_chain[1][1][1] == "0.2"), "Added element to token map is not a list"
+    assert (markov_chain[1][1][1] == 0.2), "Added element to token map is not a list"

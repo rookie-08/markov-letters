@@ -131,6 +131,7 @@ def convert_fileline_to_chaindata(markov_chain, line):
         if (length_split_line == 1):
             markov_chain[length_markov_chain - 1].append(line)          # Line has only one word
         else:
+            filter_probability_list(split_line)
             markov_chain[length_markov_chain - 1].append(split_line)    # Line has more than one word
 
 # Manipulation
