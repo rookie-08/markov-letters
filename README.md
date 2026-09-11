@@ -50,7 +50,7 @@ Using Python to create a second-order markov chain that can generate words.
 
     ```
     # ORDER 0
-    
+    START
     a 0.023 b 0.034 c 0.068 ...
     # ORDER 1
     a

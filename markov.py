@@ -21,10 +21,69 @@ Things to do:
     - Add explanations and methodology to README.md
 """
 
+def analyze_word_to_tokens(word):
+    """
+    Takes a string `word` and does a second order markov analysis on it.
+
+    "Table" --> ["START", "t", "t", "a", "ta", "b", "ab", "l", "bl", "e", "le", "END"]
+    """
+    ...
+
+def assimilate_into_markov_chain(markov_list, token_analysis):
+    """
+    Uses the list `token_analysis`, then adds its frequency (int) to `markov_list`.
+    """
+    ...
+
+def sum_probability_list(probability_list):
+    """
+    Returns the sum of the numerical elements in a `probability_list`.
+    """
+    # Initialize a variable to get the sum.
+    # Run a modified for loop on the probability list.
+        # Add the value of each numerical element to the sum.
+    # Return the sum variable's value.
+    ...
+
+def normalize_probability_list(probability_list):
+    """
+    Divides all numerical elements in `probability_list` such that the sum of
+    all the numerical elements will equal 1.0.
+    """
+    # Initialize a variable to get the sum of the probability list.
+    # Invoke `sum_probability_list`. 
+    # Run a modified for loop on the probability list.
+        # Divide each element by the sum, then set each element to the quotient.
+    # Return the new probability list.
+    ...
+
+def normalize_markov_list(markov_list):
+    """
+    Normalizes a markov list's probability lists.
+    """
+    # Run a for loop on markov_list to get its token maps.
+        # Run a modified for loop on each token map to get its probability lists.
+            # Invoke `normalize_probability_list` to set each probability list.
+
+    # Return the markov list.
+    ...
+
 def make_markov_network():
     """
     Returns a [markov chain] after reading a hardcoded text file.
     """
+
+    # Create a markov chain: a list of three token maps.
+
+    # Use `with as` to open the file.
+        # Run a for loop on each line of the file.
+            # Strips each line.
+            # Get an analysis of a word's patterns through `analyze_word_to_tokens`.
+            # Use the analysis by invoking `assimilate_into_markov_chain`.
+    
+    # Normalize the frequency of the markov chain.
+
+    # Return the markov chain.
     ...
 
 def write_probability_list(probability_list):
@@ -35,7 +94,7 @@ def write_probability_list(probability_list):
 
     while False: # For loop
         # Use str() to add a " " to the string.
-        # If it's not the end of the string, add " ".
+        # If it's not the end of the list, add " ".
         ...
     
     # Return the string.
