@@ -43,7 +43,25 @@ def convert_word_to_tokens(word):
     # Add word[len - 2] + word[len - 1] and "END".
 
     # Return the list.
-    ...
+
+    token_list = []
+
+    word_length = len(word)
+
+    for char_index in range(word_length):
+        if (char_index == 0):
+            token_list.append("START")
+            token_list.append(word[char_index])
+        elif (char_index == 1):
+            token_list.append(word[char_index - 1])
+            token_list.append(word[char_index])
+        elif (char_index >= 2):
+            token_list.append(word[char_index - 2] + word[char_index - 1])
+            token_list.append(word[char_index])
+    token_list.append(word[word_length - 2] + word[word_length - 1])
+    token_list.append("END")
+
+    return token_list
 
 def covert_probability_list_to_string(probability_list):
     """

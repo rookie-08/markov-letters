@@ -111,13 +111,24 @@ def test_compare_matching_lists_4():
     assert expected == actual
 
 # Tests
-"""def test_analyze_word_to_tokens():
+def test_convert_word_to_tokens_3():
+    # setup
+    word = "cat"
+    expected = ["START", "c", "c", "a", "ca", "t", "at", "END"]
+
+    # invoke
+    actual = markov.convert_word_to_tokens(word)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
+
+def test_convert_word_to_tokens_5():
     # setup
     word = "table"
     expected = ["START", "t", "t", "a", "ta", "b", "ab", "l", "bl", "e", "le", "END"]
 
     # invoke
-    actual = markov.analyze_word_to_tokens(word)
+    actual = markov.convert_word_to_tokens(word)
 
     # analyze
-    # assert expected == actual"""
+    assert compare_matching_lists(expected, actual)
