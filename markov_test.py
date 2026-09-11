@@ -288,3 +288,42 @@ def test_get_probability_list_fail():
 
     # analyze
     assert compare_matching_lists(expected, actual)
+
+def test_get_property_0Sa():
+    # setup
+    order = 0
+    key = "START"
+    token = "a"
+    expected = 0.1
+
+    # invoke
+    actual = markov.get_property(markov_chain, order, key, token)
+
+    # analyze
+    assert expected == actual
+
+def test_get_property_1bc():
+    # setup
+    order = 1
+    key = "b"
+    token = "c"
+    expected = 0.6
+
+    # invoke
+    actual = markov.get_property(markov_chain, order, key, token)
+
+    # analyze
+    assert expected == actual
+
+def test_get_property_1aa():
+    # setup
+    order = 1
+    key = "a"
+    token = "a"
+    expected = 0.1
+
+    # invoke
+    actual = markov.get_property(markov_chain, order, key, token)
+
+    # analyze
+    assert expected == actual

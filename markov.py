@@ -164,6 +164,21 @@ def get_property(markov_chain, order, key, token):
                 # Did you find the corresponding token?
                     # Return the numerical element.
     # Return nothing.
+
+    token_map = markov_chain[order]
+    length_token_map = len(token_map)
+
+    for even_index_token_map in range(0, length_token_map, 2):
+        focused_key = token_map[even_index_token_map]
+        focused_probability_list = token_map[even_index_token_map + 1]
+        if (focused_key == key):
+            length_probability_list = len(focused_probability_list)
+            for even_index_prob_map in range(0, length_probability_list, 2):
+                focused_token_token = focused_probability_list[even_index_prob_map]
+                focused_token_value = focused_probability_list[even_index_prob_map + 1]
+                if (focused_token_token == token):
+                    return focused_token_value
+    return None
     ...
 
 def set_property(markov_chain, order, key, token, value):
