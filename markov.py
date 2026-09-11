@@ -90,18 +90,41 @@ def convert_probability_list_to_string(probability_list):
     # Return
     return string_prob_list
 
+def filter_probability_list(probability_list):
+    """
+    Goes through a `probability_list`'s elements and runs `float()` on the
+    odd-numbered elements.
+    """
+
 def convert_fileline_to_chaindata(markov_chain, line):
-    # CODE
-    # If there's a #
-        # Append a new token map to the markov chain
-    # Otherwise
-        # If the len(split) == 1
-            # Add the line to the most recent token map
-        # Else
-            # Split the line into a probability list and add it to the most recent token map
-    # Return the markov_chain, just in case
-    # A refactoring may need to remove the above line
-    ...
+    """
+    Adds data to `markov_chain` depending on the string `line` that it reads.
+
+    - If `line` starts with #, a new list (token map) is appended to
+    `markov_chain`.
+    
+    - If `line` consists of a one-word, non-#-starting String, it is added to
+    the most recent token map.
+
+    - If `line` doesn't start with # and is split into more than one word, it
+    is converted to a list before being added to the most recent token map.
+    """
+
+    # Analysis
+    length_markov_chain = len(markov_chain)
+    starts_with_hash = (line[0] == "#")
+    split_line = line.split(sep=" ")
+    length_split_line = len(split_line)
+
+    # Behavior
+    if (starts_with_hash):
+        new_token_map = []
+        markov_chain.append(new_token_map)                              # Line starts with hashtag
+    else:
+        if (length_split_line == 1):
+            markov_chain[length_markov_chain - 1].append(line)          # Line has only one word
+        else:
+            markov_chain[length_markov_chain - 1].append(split_line)    # Line has more than one word
 
 # Manipulation
 def get_probability_list(markov_chain, order, token):

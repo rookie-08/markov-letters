@@ -187,3 +187,52 @@ def test_convert_probability_list_to_string_0():
 
     # analyze
     assert expected == actual
+
+def test_convert_fileline_to_chaindata_hash():
+    # setup
+    markov_chain = [
+        [],
+        []
+    ]
+    line = "# ORDER 0"
+
+    # invoke
+    markov.convert_fileline_to_chaindata(markov_chain, line)
+
+    # analyze
+    assert (len(markov_chain) == 3), "Markov chain did not obtain new token map"
+    assert (len(markov_chain[len(markov_chain) - 1]) > -1), "Token map of markov chain is not a sequence"
+
+def test_convert_filename_to_chaindata_single():
+    # setup
+    markov_chain = [
+        [],
+        [
+            "a",
+            ["a", 0.2, "b", 0.3, "c", 0.5]
+        ]
+    ]
+    line = "b"
+
+    # invoke
+    markov.convert_fileline_to_chaindata(markov_chain, line)
+
+    # analyze
+    assert (markov_chain[1][2] == "b"), "New token key did not appear in token map"
+
+def test_convert_filename_to_chaindata_multi():
+    # setup
+    markov_chain = [
+        [],
+        [
+            "a"
+        ]
+    ]
+    line = "a 0.2 b 0.3 c 0.5"
+
+    # invoke
+    markov.convert_fileline_to_chaindata(markov_chain, line)
+
+    # analyze
+    assert (len(markov_chain[1]) == 2), "Token map did not grow"
+    assert (markov_chain[1][1][1] == "0.2"), "Added element to token map is not a list"
