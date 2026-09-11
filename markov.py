@@ -29,6 +29,19 @@ def analyze_word_to_tokens(word):
 
     "Table" --> ["START", "t", "t", "a", "ta", "b", "ab", "l", "bl", "e", "le", "END"]
     """
+
+    # Initialize the list.
+
+    # for loop: 0 to length - 1
+        # is index 0?
+            # Add "START" and word[i].
+        # is index 1?
+            # Add word[i - 1] and word[i].
+        # is index >= 2?
+            # Add word[i - 2] + word[i - 1] and word[i].
+    # Add word[len - 2] + word[len - 1] and "END".
+
+    # Return the list.
     ...
 
 def get_markov_chain_item(markov_list, order, key, token):
