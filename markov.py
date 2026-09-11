@@ -135,7 +135,7 @@ def convert_fileline_to_chaindata(markov_chain, line):
             markov_chain[length_markov_chain - 1].append(split_line)    # Line has more than one word
 
 # Manipulation
-def get_probability_list(markov_chain, order, token):
+def get_probability_list(markov_chain, order, key):
     """
     Retrieves a probability list from the `order`th token map.
 
@@ -145,8 +145,8 @@ def get_probability_list(markov_chain, order, token):
     length_token_map = len(markov_chain[order])
 
     for even_index in range(0, length_token_map, 2):
-        focused_token = markov_chain[order][even_index]
-        if (focused_token == token):
+        focused_key = markov_chain[order][even_index]
+        if (focused_key == key):
             return markov_chain[order][even_index + 1]
 
     return []
@@ -157,29 +157,15 @@ def get_property(markov_chain, order, key, token):
     `order`th order, accessing with a context key `key`, for the probability of
     `token`.
     """
-    # Access the ordered token map of the markov chain.
-    # Run a for loop on the token map.
-        # Did you find the corresponding key in the token map?
-            # Run a for loop on the corresponding probability list.
-                # Did you find the corresponding token?
-                    # Return the numerical element.
-    # Return nothing.
 
-    token_map = markov_chain[order]
-    length_token_map = len(token_map)
+    focused_probability_list = get_probability_list(markov_chain, order, key)
+    length_probability_list = len(focused_probability_list)
 
-    for even_index_token_map in range(0, length_token_map, 2):
-        focused_key = token_map[even_index_token_map]
-        focused_probability_list = token_map[even_index_token_map + 1]
-        if (focused_key == key):
-            length_probability_list = len(focused_probability_list)
-            for even_index_prob_map in range(0, length_probability_list, 2):
-                focused_token_token = focused_probability_list[even_index_prob_map]
-                focused_token_value = focused_probability_list[even_index_prob_map + 1]
-                if (focused_token_token == token):
-                    return focused_token_value
-    return None
-    ...
+    for even_index in range(0, length_probability_list, 2):
+        focused_token = focused_probability_list[even_index]
+        focused_value = focused_probability_list[even_index + 1]
+        if (focused_token == token):
+            return focused_value
 
 def set_property(markov_chain, order, key, token, value):
     """

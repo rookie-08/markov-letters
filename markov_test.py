@@ -327,3 +327,16 @@ def test_get_property_1aa():
 
     # analyze
     assert expected == actual
+
+def test_get_property_1ad():
+    # setup
+    order = 1
+    key = "a"
+    token = "d"
+    expected = None
+
+    # invoke
+    actual = markov.get_property(markov_chain, order, key, token)
+
+    # analyze
+    assert expected == actual
