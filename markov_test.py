@@ -165,3 +165,25 @@ def test_convert_word_to_tokens_0():
 
     # analyze
     assert compare_matching_lists(expected, actual)
+
+def test_convert_probability_list_to_string():
+    # setup
+    probability_list = ["a", 0.2, "b", 0.3, "c", 0.5]
+    expected = "a 0.2 b 0.3 c 0.5"
+
+    # invoke
+    actual = markov.convert_probability_list_to_string(probability_list)
+
+    # analyze
+    assert expected == actual
+
+def test_convert_probability_list_to_string_0():
+    # setup
+    probability_list = []
+    expected = ""
+
+    # invoke
+    actual = markov.convert_probability_list_to_string(probability_list)
+
+    # analyze
+    assert expected == actual

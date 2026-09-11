@@ -68,19 +68,27 @@ def convert_word_to_tokens(word):
 
     return token_list
 
-def covert_probability_list_to_string(probability_list):
+def convert_probability_list_to_string(probability_list):
     """
-    Takes a stored `probability_list` and returns a string representation of it.
+    Returns a string representation of `probability_list`, separating each element by spaces.
     """
-    # Initialize the representative string.
 
-    while False: # For loop
-        # Use str() to add a " " to the string.
-        # If it's not the end of the list, add " ".
-        ...
-    
-    # Return the string.
-    ...
+    # Setup
+    string_prob_list = ""
+
+    # Loop
+    probability_list_length = len(probability_list)
+    for index in range(probability_list_length):
+        # Acquisition
+        element = probability_list[index]
+        string_element = str(element)
+        # Concatentation
+        string_prob_list = string_prob_list + string_element
+        if (index < probability_list_length - 1):
+            string_prob_list = string_prob_list + " "
+
+    # Return
+    return string_prob_list
 
 def convert_fileline_to_chaindata(markov_chain, line):
     # CODE
