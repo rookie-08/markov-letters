@@ -132,3 +132,36 @@ def test_convert_word_to_tokens_5():
 
     # analyze
     assert compare_matching_lists(expected, actual)
+
+def test_convert_word_to_tokens_2():
+    # setup
+    word = "at"
+    expected = ["START", "a", "a", "t", "at", "END"]
+
+    # invoke
+    actual = markov.convert_word_to_tokens(word)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
+
+def test_convert_word_to_tokens_1():
+    # setup
+    word = "i"
+    expected = ["START", "i", "i", "END"]
+
+    # invoke
+    actual = markov.convert_word_to_tokens(word)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
+
+def test_convert_word_to_tokens_0():
+    # setup
+    word = ""
+    expected = ["START", "END"]
+
+    # invoke
+    actual = markov.convert_word_to_tokens(word)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)

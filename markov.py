@@ -39,10 +39,18 @@ def convert_word_to_tokens(word):
     If the length of `word` is `w`, the length of the table will be `2w + 2`.
     """
 
+    # Setup
     token_list = []
 
     word_length = len(word)
 
+    # Edge cases
+    if (word_length == 0):
+        return ["START", "END"]
+    elif (word_length == 1):
+        return ["START", word, word, "END"]
+
+    # Main code
     for char_index in range(word_length):
         if (char_index == 0):   # "START", word[0]
             token_list.append("START")
@@ -54,6 +62,7 @@ def convert_word_to_tokens(word):
             token_list.append(word[char_index - 2] + word[char_index - 1])
             token_list.append(word[char_index])
                                 # word[L - 2] + word[L - 1], "END"
+    
     token_list.append(word[word_length - 2] + word[word_length - 1])
     token_list.append("END")
 
