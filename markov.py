@@ -140,6 +140,8 @@ def get_probability_list(markov_chain, order, key):
     Retrieves a probability list from the `order`th token map.
 
     Uses `token` as the key.
+
+    Returns `[]` if a probability list cannot be found.
     """
 
     length_token_map = len(markov_chain[order])
@@ -156,6 +158,8 @@ def get_property(markov_chain, order, key, token):
     Returns a numerical element from `markov_chain`, specifically from the
     `order`th order, accessing with a context key `key`, for the probability of
     `token`.
+
+    Returns `None` if a value cannot be found.
     """
 
     focused_probability_list = get_probability_list(markov_chain, order, key)
