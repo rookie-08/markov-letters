@@ -96,6 +96,13 @@ def filter_probability_list(probability_list):
     odd-numbered elements.
     """
 
+    length_of_prob_list = len(probability_list)
+
+    for odd_index in range(1, length_of_prob_list, 2):
+        element = probability_list[odd_index]
+        num_element = float(element)
+        probability_list[odd_index] = num_element
+
 def convert_fileline_to_chaindata(markov_chain, line):
     """
     Adds data to `markov_chain` depending on the string `line` that it reads.

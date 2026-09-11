@@ -188,6 +188,18 @@ def test_convert_probability_list_to_string_0():
     # analyze
     assert expected == actual
 
+def test_filter_probability_list():
+    # setup
+    probability_list = ["a", "0.2", "b", "0.3", "c", "0.5"]
+    expected = ["a", 0.2, "b", 0.3, "c", 0.5]
+
+    # invoke
+    markov.filter_probability_list(probability_list)
+    actual = probability_list
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
+
 def test_convert_fileline_to_chaindata_hash():
     # setup
     markov_chain = [
