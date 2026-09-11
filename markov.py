@@ -232,14 +232,6 @@ def add_tokens(markov_chain, token_list):
     Uses the list `token_list`, then adds its frequency (int) to `markov_chain`.
     """
 
-    # Is the analysis at least two elements long?
-        # Invoke `add_property` for order 0, key START, token (analysis[1]).
-    # Is the analysis at least four elements long?
-        # Invoke `add_property` for order 1, key a[2], token a[3].
-    # Is the analysis at least six elements long?
-        # Run a modified for loop
-            # For each second-ordered token, invoke increment, order 2, key a[n], token a[n + 1].
-
     length_token_list = len(token_list)
 
     for index in range(0, length_token_list, 2):
