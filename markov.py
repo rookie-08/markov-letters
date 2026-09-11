@@ -242,13 +242,12 @@ def add_tokens(markov_chain, token_list):
 
     length_token_list = len(token_list)
 
-    if (length_token_list >= 2):
-        add_property(markov_chain, 0, token_list[0], token_list[1])
-    if (length_token_list >= 4):
-        add_property(markov_chain, 1, token_list[2], token_list[3])
-    if (length_token_list >= 6):
-        for index in range(4, length_token_list, 2):
-            add_property(markov_chain, 2, token_list[index], token_list[index + 1])
+    for index in range(0, length_token_list, 2):
+        # Code about setting the order of the token b/c of the first two letters
+        order = int(index / 2)
+        if (order > 2):
+            order = 2
+        add_property(markov_chain, order, token_list[index], token_list[index + 1])
 
 def sum_probability_list(probability_list):
     """
