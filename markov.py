@@ -231,14 +231,13 @@ def add_tokens(markov_chain, token_list):
     """
     Uses the list `token_list`, then adds its frequency (int) to `markov_chain`.
     """
-
     length_token_list = len(token_list)
-
     for index in range(0, length_token_list, 2):
         # Code about setting the order of the token b/c of the first two letters
         order = int(index / 2)
         if (order > 2):
             order = 2
+        # Increments
         add_property(markov_chain, order, token_list[index], token_list[index + 1])
 
 def sum_probability_list(probability_list):
