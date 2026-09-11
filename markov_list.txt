@@ -1,17 +1,28 @@
-# Unsorted
-analyze word to tokens
-get markov chain item
-set markov chain item
-increment markov chain item
-assimilate into markov chain
-sum probability list
-normalize probability list
-normalize markov list
-make markov network
-write probability list
-write network
-read network file each line
-read network file
-find probability list
-choose random token
-use markov network
+# Conversions
+analyze word to tokens          => convert_word_to_tokens
+find probability list           => get_probability_list
+write probability list          => convert_probability_list_to_string
+read network file each line     => from_file_line
+
+# Basic Chain Manipulation
+get markov chain item           => get_property
+set markov chain item           => set_property
+increment markov chain item     => add_property
+
+# Basic Chain Manipulation
+assimilate into markov chain    => add_tokens_to_chain
+sum probability list             > sum_probability_list
+normalize probability list       > normalize_probability_list
+normalize markov list           => normalize_markov_chain
+
+# Application
+choose random token             => generate_token
+
+# Actions
+read network file               => from_file
+write network                   => to_file
+make markov network             => create_markov_chain
+use markov network              => generate_string
+
+# Notes
+"mnp" denotes "manipulation"
