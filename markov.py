@@ -232,11 +232,6 @@ def add_tokens(markov_chain, token_list):
     Uses the list `token_list`, then adds its frequency (int) to `markov_chain`.
     """
 
-    """length_token_list = len(token_list)
-
-    if (length_token_list >= 2):
-        add_property(markov_chain, 0, "START", )"""
-
     # Is the analysis at least two elements long?
         # Invoke `add_property` for order 0, key START, token (analysis[1]).
     # Is the analysis at least four elements long?
@@ -244,7 +239,16 @@ def add_tokens(markov_chain, token_list):
     # Is the analysis at least six elements long?
         # Run a modified for loop
             # For each second-ordered token, invoke increment, order 2, key a[n], token a[n + 1].
-    ...
+
+    length_token_list = len(token_list)
+
+    if (length_token_list >= 2):
+        add_property(markov_chain, 0, token_list[0], token_list[1])
+    if (length_token_list >= 4):
+        add_property(markov_chain, 1, token_list[2], token_list[3])
+    if (length_token_list >= 6):
+        for index in range(4, length_token_list, 2):
+            add_property(markov_chain, 2, token_list[index], token_list[index + 1])
 
 def sum_probability_list(probability_list):
     """

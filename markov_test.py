@@ -554,4 +554,31 @@ def test_add_property_1cd():
     assert expected == actual
 
 def test_add_tokens():
-    ...
+    # setup
+    markov_chain = [
+        [
+            "START",
+            ["a", 0.1, "b", 0.1, "c", 0.5]
+        ],
+        [
+            "a",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+            "b",
+            ["a", 0.3, "b", 0.1, "c", 0.6],
+            "c",
+            ["a", 0.2, "b", 0.6, "c", 0.2]
+        ],
+        [
+            "ab",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+        ],
+    ]
+    token_list = ["START", "a", "a", "b", "ab", "a"]
+
+    # invoke
+    markov.add_tokens(markov_chain, token_list)
+
+    # analyze
+    assert markov_chain[0][1][1] == 1.1
+    assert markov_chain[1][1][3] == 1.5
+    assert markov_chain[2][1][1] == 1.1
