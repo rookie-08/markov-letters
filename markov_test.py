@@ -15,9 +15,15 @@ def compare_matching_lists(list_a, list_b):
     Determines if all elements of `list_a` can be found in `list_b` and vice versa.
     """
 
-    # Run a for loop on list A.
-        # Can each element be found in list_b through invoking `search_list_for_element`?
-    ...
+    for element_a in list_a:
+        included_element_a = search_list_for_element(list_b, element_a)
+        if (not included_element_a):
+            return False
+    for element_b in list_b:
+        included_element_b = search_list_for_element(list_a, element_b)
+        if (not included_element_b):
+            return False
+    return True
 
 # Metatests
 def test_search_list_for_element_abcde_d():
@@ -52,6 +58,54 @@ def test_search_list_for_element_words():
 
     # invoke
     actual = search_list_for_element(a_list, an_element)
+
+    # analyze
+    assert expected == actual
+
+def test_compare_matching_lists_1():
+    # setup
+    list_a = ["t", "t", "a", "a", "b", "b"]
+    list_b = ["t", "t", "a", "a", "b", "b"]
+    expected = True
+
+    # invoke
+    actual = compare_matching_lists(list_a, list_b)
+
+    # analyze
+    assert expected == actual
+
+def test_compare_matching_lists_2():
+    # setup
+    list_a = []
+    list_b = ["START", "c", "c", "a", "ca", "t", "at", "END"]
+    expected = False
+
+    # invoke
+    actual = compare_matching_lists(list_a, list_b)
+
+    # analyze
+    assert expected == actual
+
+def test_compare_matching_lists_3():
+    # setup
+    list_a = []
+    list_b = []
+    expected = True
+
+    # invoke
+    actual = compare_matching_lists(list_a, list_b)
+
+    # analyze
+    assert expected == actual
+
+def test_compare_matching_lists_4():
+    # setup
+    list_a = ["happy", "sad"]
+    list_b = ["medium", "happy"]
+    expected = False
+
+    # invoke
+    actual = compare_matching_lists(list_a, list_b)
 
     # analyze
     assert expected == actual
