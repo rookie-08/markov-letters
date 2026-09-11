@@ -1,5 +1,21 @@
 import markov
 
+# Example variables
+markov_chain = [
+    [
+        "START",
+        ["a", 0.1, "b", 0.1, "c", 0.5]
+    ],
+    [
+        "a",
+        ["a", 0.1, "b", 0.5, "c", 0.4],
+        "b",
+        ["a", 0.3, "b", 0.1, "c", 0.6],
+        "c",
+        ["a", 0.2, "b", 0.6, "c", 0.2]
+    ],
+]
+
 # Auxillary
 def search_list_for_element(a_list, an_element):
     """
@@ -251,20 +267,6 @@ def test_convert_filename_to_chaindata_multi():
 
 def test_get_probability_list():
     # setup
-    markov_chain = [
-        [
-            "START",
-            ["a", 0.1, "b", 0.1, "c", 0.5]
-        ],
-        [
-            "a",
-            ["a", 0.1, "b", 0.5, "c", 0.4],
-            "b",
-            ["a", 0.3, "b", 0.1, "c", 0.6],
-            "c",
-            ["a", 0.2, "b", 0.6, "c", 0.2]
-        ],
-    ]
     order = 1
     token = "b"
     expected = ["a", 0.3, "b", 0.1, "c", 0.6]
@@ -277,20 +279,6 @@ def test_get_probability_list():
 
 def test_get_probability_list_fail():
     # setup
-    markov_chain = [
-        [
-            "START",
-            ["a", 0.1, "b", 0.1, "c", 0.5]
-        ],
-        [
-            "a",
-            ["a", 0.1, "b", 0.5, "c", 0.4],
-            "b",
-            ["a", 0.3, "b", 0.1, "c", 0.6],
-            "c",
-            ["a", 0.2, "b", 0.6, "c", 0.2]
-        ],
-    ]
     order = 1
     token = "d"
     expected = []
