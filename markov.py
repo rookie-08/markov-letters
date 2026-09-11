@@ -10,6 +10,8 @@ Things to do:
 
     - Outline functions, top-down
 
+    - Assertions for debugging
+
     - Verify that there are no missing invokes
 
     - Create tests + Program functions, down-top
@@ -19,10 +21,36 @@ Things to do:
     - Add explanations and methodology to README.md
 """
 
+def make_markov_network():
+    """
+    Returns a [markov chain] after reading a hardcoded text file.
+    """
+    ...
+
+def write_probability_list(probability_list):
+    """
+    Takes a stored `probability_list` and returns a string representation of it.
+    """
+    # Initialize the representative string.
+
+    while False: # For loop
+        # Use str() to add a " " to the string.
+        # If it's not the end of the string, add " ".
+        ...
+    
+    # Return the string.
+
 def write_network(markov_list):
     """
     Takes a stored `markov_list` and overwrites it to "markov_data.txt"
     """
+
+    # initialize a string to be stored into a file.
+
+    while False: # for each order in the markov chain:
+        # Write the double hashtag header
+        # Write each element of each token map on a separate line, partly through `write_probability_list`
+        ...
     ...
 
 def read_network_file_each_line(markov_list, line):
@@ -53,12 +81,6 @@ def read_network_file():
             # Strip the line for cleanliness
             # Invoke `markov_chain = read_network_file_each_line` to prevent overnesting
     # Return markov list
-    ...
-
-def make_markov_network():
-    """
-    Returns a [markov chain] after reading a hardcoded text file.
-    """
     ...
 
 def find_probability_list(markov_list, order, token):
@@ -100,7 +122,8 @@ def use_markov_network(markov_list):
     # Var: Context variable to select tokens
 
     # CODE
-    # Invoke `choose_random_token` for markov_list[0], then get the token
+    # Choose a probability list from markov_list[0] using `find_probability_list`
+    # Invoke `choose_random_token` for the probability list, then get the token
     # If "END" has been pulled, return ""
     # Set the context to the first character
     # Choose a probability list from markov_list[1]
