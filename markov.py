@@ -26,38 +26,34 @@ Things to do:
 # Converting 
 def convert_word_to_tokens(word):
     """
-    Takes a string `word` and does a second order markov analysis on it.
+    Takes a string `word` and converts it to a specific list.
 
-    "Table" --> ["START", "t", "t", "a", "ta", "b", "ab", "l", "bl", "e", "le", "END"]
+    The even-numbered elements of the list `[0], [2], ...` represent tokens
+    in the hypothesis (in a markov chain, this is where you "start"). The
+    odd-numbered elements of the list `[1], [3], ...` directly following the
+    even-numbered elements represent tokens in the conclusion (in the markov
+    chain, you would go from the "start" to the next step).
+
+    Example output: `"cat" => ["START", "c", "c", "a", "ca", "t", "at", "END"]`
+
+    If the length of `word` is `w`, the length of the table will be `2w + 2`.
     """
-
-    # Initialize the list.
-
-    # for loop: 0 to length - 1
-        # is index 0?
-            # Add "START" and word[i].
-        # is index 1?
-            # Add word[i - 1] and word[i].
-        # is index >= 2?
-            # Add word[i - 2] + word[i - 1] and word[i].
-    # Add word[len - 2] + word[len - 1] and "END".
-
-    # Return the list.
 
     token_list = []
 
     word_length = len(word)
 
     for char_index in range(word_length):
-        if (char_index == 0):
+        if (char_index == 0):   # "START", word[0]
             token_list.append("START")
             token_list.append(word[char_index])
-        elif (char_index == 1):
+        elif (char_index == 1): # word[1], word[0]
             token_list.append(word[char_index - 1])
             token_list.append(word[char_index])
-        elif (char_index >= 2):
+        elif (char_index >= 2): # word[n - 2] + word[n - 1], word[n]
             token_list.append(word[char_index - 2] + word[char_index - 1])
             token_list.append(word[char_index])
+                                # word[L - 2] + word[L - 1], "END"
     token_list.append(word[word_length - 2] + word[word_length - 1])
     token_list.append("END")
 
