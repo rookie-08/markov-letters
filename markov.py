@@ -19,6 +19,8 @@ Things to do:
     - Polish README.md, the bullet points for notes look weird
 
     - Add explanations and methodology to README.md
+
+        - How does the markov chain work? (use terminology to update code)
 """
 
 def analyze_word_to_tokens(word):
@@ -29,10 +31,56 @@ def analyze_word_to_tokens(word):
     """
     ...
 
+def get_markov_chain_item(markov_list, order, key, token):
+    """
+    Returns a numerical element from `markov_list`, specifically from the
+    `order`th order, accessing with a context key `key`, for the probability of
+    `token`.
+    """
+    # Access the ordered token map of the markov list.
+    # Run a for loop on the token map.
+        # Did you find the corresponding key in the token map?
+            # Run a for loop on the corresponding probability list.
+                # Did you find the corresponding token?
+                    # Return the numerical element.
+    # Return nothing.
+    ...
+
+def set_markov_chain_item(markov_list, order, key, token, value):
+    """
+    Sets an element's value of a `markov_list` given an `order`, context `key`,
+    and the `token` which needs its numerical element set to `value`.
+    """
+    # Access the ordered token map of the markov list.
+    # Run a for loop on the token map.
+        # Did you find the corresponding key in the token map?
+            # Run a for loop on the corresponding probability list.
+                # Did you find the corresponding token?
+                    # Set the numerical element.
+                    # Return True.
+    # Return False.
+    ...
+
+def increment_markov_chain_item(markov_list, order, key, token):
+    """
+    Uses `set_markov_chain_item` to increase a numerical element by 1.
+    """
+    # Store a variable through invoking `get_markov_chain_item`.
+    # Increment the variable by 1.
+    # Invoke `set_markov_chain_item` with the new variable.
+    ...
+
 def assimilate_into_markov_chain(markov_list, token_analysis):
     """
     Uses the list `token_analysis`, then adds its frequency (int) to `markov_list`.
     """
+    # Is the analysis at least two elements long?
+        # Invoke `increment_markov_chain_item` for order 0, key START, token (analysis[1]).
+    # Is the analysis at least four elements long?
+        # Invoke `increment_markov_chain_item` for order 1, key a[2], token a[3].
+    # Is the analysis at least six elements long?
+        # Run a modified for loop
+            # For each second-ordered token, invoke increment, order 2, key a[n], token a[n + 1].
     ...
 
 def sum_probability_list(probability_list):
