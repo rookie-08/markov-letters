@@ -154,7 +154,10 @@ def get_probability_list(markov_chain, order, key):
             return markov_chain[order][even_index + 1]
 
     # Edge case: Found nothing
-    return []
+    empty_list = []
+    markov_chain[order].append(key)
+    markov_chain[order].append(empty_list)
+    return empty_list
 
 def get_property(markov_chain, order, key, token):
     """
@@ -174,6 +177,10 @@ def get_property(markov_chain, order, key, token):
         # Conditional statement: Found the token
         if (focused_token == token):
             return focused_value
+    # There is no token
+    focused_probability_list.append(token)
+    focused_probability_list.append(0)
+    return 0
 
 def set_property(markov_chain, order, key, token, value):
     """
@@ -192,7 +199,10 @@ def set_property(markov_chain, order, key, token, value):
         if (focused_token == token):
             focused_probability_list[even_index + 1] = value
             return True
-    return False
+    # There is no token
+    focused_probability_list.append(token)
+    focused_probability_list.append(value)
+    return True
 
 def add_property(markov_chain, order, key, token):
     """
@@ -200,6 +210,7 @@ def add_property(markov_chain, order, key, token):
 
     Returns `True` if the operation was successful.
     """
+
     # Loop
     focused_probability_list = get_probability_list(markov_chain, order, key)
     length_probability_list = len(focused_probability_list)
@@ -210,13 +221,22 @@ def add_property(markov_chain, order, key, token):
             # Incremement the next element by one
             focused_probability_list[even_index + 1] = focused_probability_list[even_index + 1] + 1
             return True
-    return False
+    # There is no token
+    focused_probability_list.append(token)
+    focused_probability_list.append(1)
+    return True
 
 # Chain Manipulation
-def add_tokens(markov_chain, token_analysis):
+def add_tokens(markov_chain, token_list):
     """
-    Uses the list `token_analysis`, then adds its frequency (int) to `markov_chain`.
+    Uses the list `token_list`, then adds its frequency (int) to `markov_chain`.
     """
+
+    """length_token_list = len(token_list)
+
+    if (length_token_list >= 2):
+        add_property(markov_chain, 0, "START", )"""
+
     # Is the analysis at least two elements long?
         # Invoke `add_property` for order 0, key START, token (analysis[1]).
     # Is the analysis at least four elements long?
