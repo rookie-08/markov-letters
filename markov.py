@@ -144,13 +144,16 @@ def get_probability_list(markov_chain, order, key):
     Returns `[]` if a probability list cannot be found.
     """
 
+    # Loop
     length_token_map = len(markov_chain[order])
-
     for even_index in range(0, length_token_map, 2):
         focused_key = markov_chain[order][even_index]
+        # Conditional statement: Finding the key in the token map
         if (focused_key == key):
+            # Return the probability list
             return markov_chain[order][even_index + 1]
 
+    # Edge case: Found nothing
     return []
 
 def get_property(markov_chain, order, key, token):
@@ -162,12 +165,13 @@ def get_property(markov_chain, order, key, token):
     Returns `None` if a value cannot be found.
     """
 
+    # Loop
     focused_probability_list = get_probability_list(markov_chain, order, key)
     length_probability_list = len(focused_probability_list)
-
     for even_index in range(0, length_probability_list, 2):
         focused_token = focused_probability_list[even_index]
         focused_value = focused_probability_list[even_index + 1]
+        # Conditional statement: Found the token
         if (focused_token == token):
             return focused_value
 
@@ -175,21 +179,16 @@ def set_property(markov_chain, order, key, token, value):
     """
     Sets an element's value of a `markov_chain` given an `order`, context `key`,
     and the `token` which needs its numerical element set to `value`.
-    """
-    # Access the ordered token map of the markov chain.
-    # Run a for loop on the token map.
-        # Did you find the corresponding key in the token map?
-            # Run a for loop on the corresponding probability list.
-                # Did you find the corresponding token?
-                    # Set the numerical element.
-                    # Return True.
-    # Return False.
 
+    Returns `True` if the operation was successful.
+    """
+
+    # Loop
     focused_probability_list = get_probability_list(markov_chain, order, key)
     length_probability_list = len(focused_probability_list)
-
     for even_index in range(0, length_probability_list, 2):
         focused_token = focused_probability_list[even_index]
+        # Conditional statement: Found the token
         if (focused_token == token):
             focused_probability_list[even_index + 1] = value
             return True
@@ -198,11 +197,20 @@ def set_property(markov_chain, order, key, token, value):
 def add_property(markov_chain, order, key, token):
     """
     Uses `set_property` to increase a numerical element by 1.
+
+    Returns `True` if the operation was successful.
     """
-    # Store a variable through invoking `get_property`.
-    # Increment the variable by 1.
-    # Invoke `set_property` with the new variable.
-    ...
+    # Loop
+    focused_probability_list = get_probability_list(markov_chain, order, key)
+    length_probability_list = len(focused_probability_list)
+    for even_index in range(0, length_probability_list, 2):
+        focused_token = focused_probability_list[even_index]
+        # Conditional statement: Found the token
+        if (focused_token == token):
+            # Incremement the next element by one
+            focused_probability_list[even_index + 1] = focused_probability_list[even_index + 1] + 1
+            return True
+    return False
 
 # Chain Manipulation
 def add_tokens(markov_chain, token_analysis):
