@@ -137,19 +137,19 @@ def convert_fileline_to_chaindata(markov_chain, line):
 # Manipulation
 def get_probability_list(markov_chain, order, token):
     """
-    Chooses a token map from `markov_chain` based on the `order`th order of tokens.
+    Retrieves a probability list from the `order`th token map.
 
     Uses `token` as the key.
     """
 
-    # Start analyzing markov_chain[order]
+    length_token_map = len(markov_chain[order])
 
-    while False: # for loop with index and skip 2
-        # Does `index` have the `token`?
-        # If so, return the probability list at `index + 1`
-        ...
-    # Throw up
-    ...
+    for even_index in range(0, length_token_map, 2):
+        focused_token = markov_chain[order][even_index]
+        if (focused_token == token):
+            return markov_chain[order][even_index + 1]
+
+    return []
 
 def get_property(markov_chain, order, key, token):
     """

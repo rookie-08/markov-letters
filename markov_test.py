@@ -248,3 +248,55 @@ def test_convert_filename_to_chaindata_multi():
     # analyze
     assert (len(markov_chain[1]) == 2), "Token map did not grow"
     assert (markov_chain[1][1][1] == 0.2), "Added element to token map is not a list"
+
+def test_get_probability_list():
+    # setup
+    markov_chain = [
+        [
+            "START",
+            ["a", 0.1, "b", 0.1, "c", 0.5]
+        ],
+        [
+            "a",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+            "b",
+            ["a", 0.3, "b", 0.1, "c", 0.6],
+            "c",
+            ["a", 0.2, "b", 0.6, "c", 0.2]
+        ],
+    ]
+    order = 1
+    token = "b"
+    expected = ["a", 0.3, "b", 0.1, "c", 0.6]
+
+    # invoke
+    actual = markov.get_probability_list(markov_chain, order, token)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
+
+def test_get_probability_list_fail():
+    # setup
+    markov_chain = [
+        [
+            "START",
+            ["a", 0.1, "b", 0.1, "c", 0.5]
+        ],
+        [
+            "a",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+            "b",
+            ["a", 0.3, "b", 0.1, "c", 0.6],
+            "c",
+            ["a", 0.2, "b", 0.6, "c", 0.2]
+        ],
+    ]
+    order = 1
+    token = "d"
+    expected = []
+
+    # invoke
+    actual = markov.get_probability_list(markov_chain, order, token)
+
+    # analyze
+    assert compare_matching_lists(expected, actual)
