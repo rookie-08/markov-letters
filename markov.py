@@ -184,7 +184,16 @@ def set_property(markov_chain, order, key, token, value):
                     # Set the numerical element.
                     # Return True.
     # Return False.
-    ...
+
+    focused_probability_list = get_probability_list(markov_chain, order, key)
+    length_probability_list = len(focused_probability_list)
+
+    for even_index in range(0, length_probability_list, 2):
+        focused_token = focused_probability_list[even_index]
+        if (focused_token == token):
+            focused_probability_list[even_index + 1] = value
+            return True
+    return False
 
 def add_property(markov_chain, order, key, token):
     """

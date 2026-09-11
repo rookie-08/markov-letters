@@ -353,3 +353,57 @@ def test_get_property_1da():
 
     # analyze
     assert expected == actual
+
+def test_set_property_1bc():
+    markov_chain = [
+        [
+            "START",
+            ["a", 0.1, "b", 0.1, "c", 0.5]
+        ],
+        [
+            "a",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+            "b",
+            ["a", 0.3, "b", 0.1, "c", 0.6],
+            "c",
+            ["a", 0.2, "b", 0.6, "c", 0.2]
+        ],
+    ]
+    order = 1
+    key = "b"
+    token = "c"
+    value = 0.8
+    expected = True
+    
+    # invoke
+    actual = markov.set_property(markov_chain, order, key, token, value)
+
+    # analyze
+    assert expected == actual
+
+def test_set_property_1dc():
+    markov_chain = [
+        [
+            "START",
+            ["a", 0.1, "b", 0.1, "c", 0.5]
+        ],
+        [
+            "a",
+            ["a", 0.1, "b", 0.5, "c", 0.4],
+            "b",
+            ["a", 0.3, "b", 0.1, "c", 0.6],
+            "c",
+            ["a", 0.2, "b", 0.6, "c", 0.2]
+        ],
+    ]
+    order = 1
+    key = "d"
+    token = "c"
+    value = 0.8
+    expected = False
+    
+    # invoke
+    actual = markov.set_property(markov_chain, order, key, token, value)
+
+    # analyze
+    assert expected == actual
