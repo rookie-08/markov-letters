@@ -1,0 +1,17 @@
+# Unsorted
+analyze word to tokens
+get markov chain item
+set markov chain item
+increment markov chain item
+assimilate into markov chain
+sum probability list
+normalize probability list
+normalize markov list
+make markov network
+write probability list
+write network
+read network file each line
+read network file
+find probability list
+choose random token
+use markov network
