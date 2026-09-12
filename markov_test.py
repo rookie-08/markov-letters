@@ -644,3 +644,17 @@ def test_normalize_markov_chain():
             if (delta < 0.0):
                 delta = -delta
             assert (delta < 0.1)
+
+def test_generate_token():
+    # setup
+    probability_list = ["a", 0.1, "b", 0.3, "c", 0.6]
+
+    # invoke
+    actual = markov.generate_token(probability_list)
+
+    # analyze
+    assert (actual == "a" or actual == "b" or actual == "c")
+
+def test_generate_token_100():
+    for i in range(100):
+        test_generate_token()

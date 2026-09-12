@@ -23,6 +23,8 @@ Things to do:
         - How does the markov chain work? (use terminology to update code)
 """
 
+import random
+
 # Converting 
 def convert_word_to_tokens(word):
     """
@@ -280,15 +282,14 @@ def generate_token(probability_list):
     """
     Chooses a random token from `probability_list`.
     """
+    a_float = random.random()   # For selecting weighted probabilities.
+    right_boundary = 0.0        # Will increase until `a_float` is strictly less than this.
 
-    # Generate a random number of set [0.0, 1.0)
-    # Generate a "right boundary" count
-        # It will be 1.0 at the end of the loop
-
-    while False: # should instead be a for loop with an index, as well as skip 2
-        # Add the element of `index + 1` (the probability) to the right boundary
-        # If the earlier-set random number is NOW less than the right boundary, return element of `index`
-        ...
+    for odd_index in range(1, len(probability_list), 2):
+        right_boundary = right_boundary + probability_list[odd_index]
+        if (a_float < right_boundary):
+            return probability_list[odd_index - 1]
+    # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
 
 # Higher Order Actions
 def from_file():
