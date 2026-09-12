@@ -250,6 +250,14 @@ def sum_probability_list(probability_list):
     # Return the sum variable's value.
     ...
 
+    sum = 0
+
+    length_of_prob_list = len(probability_list)
+    for odd_index in range(1, length_of_prob_list, 2):
+        sum = sum + probability_list[odd_index]
+
+    return sum
+
 def normalize_probability_list(probability_list):
     """
     Divides all numerical elements in `probability_list` such that the sum of

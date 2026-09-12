@@ -582,3 +582,14 @@ def test_add_tokens():
     assert markov_chain[0][1][1] == 1.1
     assert markov_chain[1][1][3] == 1.5
     assert markov_chain[2][1][1] == 1.1
+
+def test_sum_probability_list():
+    # setup
+    probability_list = ["a", 2, "b", 5, "c", 3]
+    expected = 10
+
+    # invoke
+    actual = markov.sum_probability_list(probability_list)
+
+    # analyze
+    assert expected == actual
