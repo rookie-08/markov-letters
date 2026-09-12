@@ -258,12 +258,12 @@ def normalize_probability_list(probability_list):
     Divides all numerical elements in `probability_list` such that the sum of
     all the numerical elements will equal 1.0.
     """
-    # Initialize a variable to get the sum of the probability list.
-    # Invoke `sum_probability_list`. 
-    # Run a modified for loop on the probability list.
-        # Divide each element by the sum, then set each element to the quotient.
-    # Return the new probability list.
-    ...
+    # Setup
+    prev_sum_prob_list = sum_probability_list(probability_list)
+    # Loop
+    length_of_prob_list = len(probability_list)
+    for odd_index in range(1, length_of_prob_list, 2):
+        probability_list[odd_index] = probability_list[odd_index] / prev_sum_prob_list
 
 def normalize_markov_chain(markov_chain):
     """

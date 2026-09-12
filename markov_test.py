@@ -593,3 +593,17 @@ def test_sum_probability_list():
 
     # analyze
     assert expected == actual
+
+def test_normalize_probability_list():
+    # setup
+    probability_list = ["a", 2, "b", 5, "c", 3]
+    expected_final_sum = 1.0
+    error_tolerance = 0.1
+
+    # invoke
+    markov.normalize_probability_list(probability_list)
+    actual_final_sum = markov.sum_probability_list(probability_list)
+
+    # analysis
+    delta = actual_final_sum - expected_final_sum
+    assert (delta < error_tolerance)
