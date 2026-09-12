@@ -28,7 +28,7 @@ import random
 MARKOV_CHAIN_PATH = "markov_data.txt"
 DATASET_PATH = "simple_words.txt"
 
-MARKOV_CHAIN = []
+MARKOV_CHAIN = [[],[],[]]
 
 # Converting 
 def convert_word_to_tokens(word):
@@ -389,15 +389,28 @@ def main():
     """
     Prompts the user to type "make" to make the markov chain or "use" to run the markov chain.
     """
-    # Set a blank string variable for the input
-    # Get a loop that is broken once the string variable is empty
-    while False:
-        # Prompt the user to type "make" or "use"
-        # If neither is used, repeat
-        ...
-    # If make, invoke `to_file` and `create_markov_chain`
-    # If use, invoke `from_file`, `generate_string`, and `print`
-    ...
+
+    sentinel = True
+
+    print("When using this program for the first time, try: `make` -> `use` -> `tofile`")
+    print("Otherwise, try: `fromfile` -> `use`")
+
+    while sentinel:
+        input_command = input("tofile, fromfile, make, use: ")
+        if (input_command == ""):
+            sentinel = False
+        elif (input_command == "tofile"):
+            to_file(MARKOV_CHAIN)
+        elif (input_command == "fromfile"):
+            MARKOV_CHAIN = from_file()
+        elif (input_command == "make"):
+            MARKOV_CHAIN = create_markov_chain()
+        elif (input_command == "use"):
+            print("New word:", generate_string(MARKOV_CHAIN))
+        elif (input_command == "debug"):
+            print(MARKOV_CHAIN)
+
+    print("Program complete")
 
 if (__name__ == "__main__"):
     main()
