@@ -1,26 +1,7 @@
 """
-Create a second-order markov chain that can generate words.
+Lets you create a second-order markov chain that can generate words.
+
 @author Rookie
-"""
-
-"""
-Things to do:
-
-    - How is a markov chain generated?
-
-    - Outline functions, top-down
-
-    - Assertions for debugging
-
-    - Verify that there are no missing invokes
-
-    - Create tests + Program functions, down-top
-
-    - Polish README.md, the bullet points for notes look weird
-
-    - Add explanations and methodology to README.md
-
-        - How does the markov chain work? (use terminology to update code)
 """
 
 import random
@@ -395,7 +376,7 @@ def generate_string(markov_chain): # UNSTABLE
 
 def main():
     """
-    Prompts the user to type "make" to make the markov chain or "use" to run the markov chain.
+    Demonstrates the capabilities of this module by giving you choices to run with.
     """
 
     sentinel = True

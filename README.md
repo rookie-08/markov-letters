@@ -4,6 +4,26 @@ Using Python to create a second-order markov chain that can generate words.
 
 # notes
 
+- To do:
+
+    - Provide background information as to how Markov Chains work
+
+    - Identify inspiration of second order markov chains
+
+    - Explain how Markov chains work in this specific case
+
+    - Explain the software engineering skills I learned
+
+    - Create terminology to make code more coherent
+
+    - Refactor and then reorganize code (?)
+
+    - Write more tests
+
+    - Reorganize README.md
+
+    - List each file and explain how they work
+
 - How a probability list is stored
     
     - Stored as a list
