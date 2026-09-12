@@ -606,4 +606,41 @@ def test_normalize_probability_list():
 
     # analysis
     delta = actual_final_sum - expected_final_sum
+    if (delta < 0):
+        delta = -delta
     assert (delta < error_tolerance)
+
+def test_normalize_markov_chain():
+    # setup
+    markov_chain = [
+        [
+            "START",
+            ["a", 25, "b", 5, "c", 5]
+        ],
+        [
+            "a",
+            ["a", 1, "b", 5, "c", 4],
+            "b",
+            ["a", 3, "b", 1, "c", 6],
+            "c",
+            ["a", 2, "b", 4, "c", 2]
+        ],
+        [
+            "ab",
+            ["a", 1, "b", 7, "c", 0],
+        ],
+    ]
+
+    # invoke
+    markov.normalize_markov_chain(markov_chain)
+
+    # analyze
+    for token_map in markov_chain:
+        for i in range(1, len(token_map), 2):
+            prob_list = token_map[i]
+            actual_sum = markov.sum_probability_list(prob_list)
+            expected_sum = 1.0
+            delta = actual_sum - expected_sum
+            if (delta < 0.0):
+                delta = -delta
+            assert (delta < 0.1)

@@ -269,12 +269,11 @@ def normalize_markov_chain(markov_chain):
     """
     Normalizes a markov chain's probability lists.
     """
-    # Run a for loop on markov_chain to get its token maps.
-        # Run a modified for loop on each token map to get its probability lists.
-            # Invoke `normalize_probability_list` to set each probability list.
 
-    # Return the markov chain.
-    ...
+    for token_map in markov_chain:
+        length_token_map = len(token_map)
+        for odd_index in range(1, length_token_map, 2):
+            normalize_probability_list(token_map[odd_index])
 
 # Application
 def generate_token(probability_list):
