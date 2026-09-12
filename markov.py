@@ -244,11 +244,6 @@ def sum_probability_list(probability_list):
     """
     Returns the sum of the numerical elements in a `probability_list`.
     """
-    # Initialize a variable to get the sum.
-    # Run a modified for loop on the probability list.
-        # Add the value of each numerical element to the sum.
-    # Return the sum variable's value.
-    ...
 
     sum = 0
 
