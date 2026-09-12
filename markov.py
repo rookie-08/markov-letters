@@ -387,8 +387,8 @@ def main():
     MARKOV_CHAIN = [[], [], []]
 
     while sentinel:
-        input_command = input("tofile, fromfile, make, use: ")
-        if (input_command == ""):
+        input_command = input("tofile, fromfile, make, use (or blank), or exit: ")
+        if (input_command == "exit"):
             sentinel = False
         elif (input_command == "tofile"):
             to_file(MARKOV_CHAIN)
@@ -397,6 +397,8 @@ def main():
         elif (input_command == "make"):
             MARKOV_CHAIN = create_markov_chain()
         elif (input_command == "use"):
+            print("New word:", generate_string(MARKOV_CHAIN))
+        elif (input_command == ""):
             print("New word:", generate_string(MARKOV_CHAIN))
         elif (input_command == "debug"):
             print(MARKOV_CHAIN)
