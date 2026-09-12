@@ -25,6 +25,11 @@ Things to do:
 
 import random
 
+MARKOV_CHAIN_PATH = "markov_data.txt"
+DATASET_PATH = "simple_words.txt"
+
+MARKOV_CHAIN = []
+
 # Converting 
 def convert_word_to_tokens(word):
     """
@@ -292,53 +297,60 @@ def generate_token(probability_list):
     # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
 
 # Higher Order Actions
-def from_file():
+def from_file(): # UNSTABLE
     """
     Reads "markov_data.txt" and returns a stored markov chain.
     """
 
-    # SETUP
-    # The markov chain to return
-    # The current token map to store into a markov[#]
+    # TODO: Write a function "is_markov_chain(markov_chain)"
+    # TODO: Write tests
 
-    # DODE
-    # Open the file through a `with as`
-        # Run a for loop on the file
-            # Strip the line for cleanliness
-            # Invoke `markov_chain = convert_fileline_to_chaindata` to prevent overnesting
-    # Return markov chain
-    ...
+    markov_chain = []
 
-def to_file(markov_chain):
+    with open(MARKOV_CHAIN_PATH) as file:
+        for raw_line in file:
+            line = raw_line.strip()
+            convert_fileline_to_chaindata(markov_chain, line)
+
+    return markov_chain
+
+def to_file(markov_chain): # UNSTABLE
     """
     Takes a stored `markov_chain` and overwrites it to "markov_data.txt"
     """
 
-    # initialize a string to be stored into a file.
+    # TODO: Write tests
 
-    while False: # for each order in the markov chain:
-        # Write the double hashtag header
-        # Write each element of each token map on a separate line, partly through `covert_probability_list_to_string`
-        ...
-    ...
+    string_to_store = ""
 
-def create_markov_chain():
+    length_of_markov_chain = len(markov_chain)
+    for order in range(length_of_markov_chain):
+        # Append # ORDER N
+        string_to_store = string_to_store + "# ORDER " + str(order) + "\n"
+        token_map = markov_chain[token_map]
+        for even_element in range(0, len(token_map), 2):
+            prob_list = token_map[even_element + 1]
+            # Append key
+            string_to_store = string_to_store + token_map[even_element] + "\n"
+            # Append probability list
+            string_to_store = string_to_store + convert_probability_list_to_string(prob_list) + "\n"
+
+def create_markov_chain(): # UNSTABLE
     """
     Returns a [markov chain] after reading a hardcoded text file.
     """
 
-    # Create a markov chain: a list of three token maps.
+    markov_chain = [[], [], []]
 
-    # Use `with as` to open the file.
-        # Run a for loop on each line of the file.
-            # Strips each line.
-            # Get an analysis of a word's patterns through `convert_word_to_tokens`.
-            # Use the analysis by invoking `add_tokens`.
-    
-    # Normalize the frequency of the markov chain.
+    with open(DATASET_PATH) as file:
+        for raw_line in file:
+            line = raw_line.strip()
+            token_list = convert_word_to_tokens(line)
+            add_tokens(markov_chain, token_list)
 
-    # Return the markov chain.
-    ...
+    normalize_markov_chain(markov_chain)
+
+    return markov_chain
 
 def generate_string(markov_chain):
     """
