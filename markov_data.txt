@@ -1,0 +1,49 @@
+# ORDER 0
+START
+a 0.2 b 0.2 c 0.2 d 0.2 e 0.2
+# ORDER 1
+a
+p 1.0
+b
+u 1.0
+c
+r 1.0
+d
+r 1.0
+e
+a 1.0
+# ORDER 2
+ap
+p 1.0
+pp
+l 1.0
+pl
+e 1.0
+le
+END 1.0
+bu
+r 1.0
+ur
+g 1.0
+rg
+e 1.0
+ge
+r 1.0
+er
+END 1.0
+cr
+e 1.0
+re
+a 1.0
+ea
+t 1.0
+at
+e 0.5 END 0.5
+te
+END 1.0
+dr
+a 1.0
+ra
+w 1.0
+aw
+END 1.0

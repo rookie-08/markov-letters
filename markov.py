@@ -26,9 +26,7 @@ Things to do:
 import random
 
 MARKOV_CHAIN_PATH = "markov_data.txt"
-DATASET_PATH = "simple_words.txt"
-
-MARKOV_CHAIN = [[],[],[]]
+DATASET_PATH = "words.txt"
 
 # Converting 
 def convert_word_to_tokens(word):
@@ -302,8 +300,8 @@ def from_file(): # UNSTABLE
     Reads "markov_data.txt" and returns a stored markov chain.
     """
 
-    # TODO: Write a function "is_markov_chain(markov_chain)"
-    # TODO: Write tests
+    # Should: Write a function "is_markov_chain(markov_chain)"
+    # Should: Write tests
 
     markov_chain = []
 
@@ -319,7 +317,7 @@ def to_file(markov_chain): # UNSTABLE
     Takes a stored `markov_chain` and overwrites it to "markov_data.txt"
     """
 
-    # TODO: Write tests
+    # SHOULD: Write tests
 
     string_to_store = ""
 
@@ -327,7 +325,7 @@ def to_file(markov_chain): # UNSTABLE
     for order in range(length_of_markov_chain):
         # Append # ORDER N
         string_to_store = string_to_store + "# ORDER " + str(order) + "\n"
-        token_map = markov_chain[token_map]
+        token_map = markov_chain[order]
         for even_element in range(0, len(token_map), 2):
             prob_list = token_map[even_element + 1]
             # Append key
@@ -335,10 +333,15 @@ def to_file(markov_chain): # UNSTABLE
             # Append probability list
             string_to_store = string_to_store + convert_probability_list_to_string(prob_list) + "\n"
 
+    with open(MARKOV_CHAIN_PATH, "w") as file:
+        file.write(string_to_store)
+
 def create_markov_chain(): # UNSTABLE
     """
     Returns a [markov chain] after reading a hardcoded text file.
     """
+
+    # SHOULD: Write tests
 
     markov_chain = [[], [], []]
 
@@ -394,6 +397,8 @@ def main():
 
     print("When using this program for the first time, try: `make` -> `use` -> `tofile`")
     print("Otherwise, try: `fromfile` -> `use`")
+
+    MARKOV_CHAIN = [[], [], []]
 
     while sentinel:
         input_command = input("tofile, fromfile, make, use: ")
