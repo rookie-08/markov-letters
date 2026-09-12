@@ -12,7 +12,9 @@ Using Python to create a second-order markov chain that can generate words.
 
     - Explain how Markov chains work in this specific case
 
-    - Explain the software engineering skills I learned
+    - Explain the software engineering skills I learned/practiced
+
+    - Explain how I developed the project (top-down, bottom-up, unit tests)
 
     - Create terminology to make code more coherent
 
@@ -23,6 +25,10 @@ Using Python to create a second-order markov chain that can generate words.
     - Reorganize README.md
 
     - List each file and explain how they work
+
+    - Do I add `markov_data` to gitignore?
+
+    - Add user manual
 
 - How a probability list is stored
     
