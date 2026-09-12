@@ -345,11 +345,16 @@ def create_markov_chain(): # UNSTABLE
 
     markov_chain = [[], [], []]
 
+    count = 0 # TEMP
+
     with open(DATASET_PATH) as file:
         for raw_line in file:
             line = raw_line.strip()
             token_list = convert_word_to_tokens(line)
             add_tokens(markov_chain, token_list)
+            count = count + 1                               # TEMP
+            if (count % 1000 == 0):                         # TEMP
+                print(str(int(count / 1000)) + "k / 466k")  # TEMP
 
     normalize_markov_chain(markov_chain)
 
