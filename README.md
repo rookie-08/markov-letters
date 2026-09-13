@@ -6,9 +6,19 @@ patterns to generate words that could exist.
 The Markov chain analyzes the system by the letter, taking the most recent
 two letters to guess a letter that could come right after it.
 
-# How Markov Chains Work
+With inspiration from the following media:
+- [M J, Ashwin. "Next Word Prediction using Markov Model."](https://medium.com/ymedialabs-innovation/next-word-prediction-using-markov-model-570fc0475f96)
+- [Veritasium. "The Strange Math that Predicts (Almost) Anything."](https://www.youtube.com/watch?v=KZeIEiBrT_w)
+
+# Background: How Markov Chains Work
 -# Or, at the very least, how I assumed how Markov chains worked before
 completing this project.
+
+TL;DR:
+- Lack of knowledge
+- Markov Chains are a model used to predict something that comes after another
+thing
+- This project's Markov Chain predicts what letter comes after the previous two
 
 ## Disclaimer
 This is not a reputable source to learn about how Markov Chains
@@ -38,16 +48,34 @@ a change is more likely for a system starting on a particular node representing
 a certain state.
 
 ## How this Markov Chain Works
+This Markov Chain behaves like a writer writing a word one letter at a time.
+The states in this chain consist of the most recent letters that were written.
+This Markov Chain is made in the "second order," (I say this to refer to the
+fact that the state refers to the two most recent letters that were written).
+That way, there would be different probabilities for if you wrote "th" compared
+to if you wrote "ph."
+
+Because words have a start and an end, this Markov Chain has to consider the
+fact that there are states for when less than two letters have been written
+so far. The Markov Chain also has to consider that there is an end that
+directly follows some letters. This consideration adjusts the Markov chain's
+behavior so it can successfully start and end the word.
+
+# The Code Behind This Markov Chain
+
+# How I Developed This Project
+
+# Reflections
+
+- I kind of didn't need to add orders when considering the list
+
+- This is probably formatted wrong and doesn't consider the right audience
 
 # notes
 
 - To do:
 
-    - Provide background information as to how Markov Chains work
-
-    - Identify inspiration of second order markov chains
-
-    - Explain how Markov chains work in this specific case
+    - Explain the code behind this markov chain
 
     - Explain the software engineering skills I learned/practiced
 
