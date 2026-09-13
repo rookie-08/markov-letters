@@ -1,6 +1,22 @@
 # markov-letters
 
-Using Python to create a second-order markov chain that can generate words.
+A Markov chain that analyzes patterns seen in a text file, then uses those
+patterns to generate words that could exist.
+
+The Markov chain analyzes the system by the letter, taking the most recent
+two letters to guess a letter that could come right after it.
+
+# About markov chains
+
+DISCLAIMER: This is not a reputable source to learn about how Markov Chains
+work. I am taking what I have assumed about Markov Chains and made an attempt
+to code a word generator with them. If you want to know as much as I do about
+Markov Chains, watch
+[this video](https://www.youtube.com/watch?v=KZeIEiBrT_w) (BONUS: If you really
+want to have the same experience that I did, write down two questions every
+ you feel suprised, shocked, or amazed.) I don't know where you can find a way
+to learn more than I do about Markov Chains, but I do know that you can
+probably find someone who can point you in the right direction.
 
 # notes
 
