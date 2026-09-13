@@ -63,6 +63,41 @@ behavior so it can successfully start and end the word.
 
 # The Code Behind This Markov Chain
 
+## Data
+
+This markov chain will be stored as a list. Each element of the list is a
+**token map**, which is also a list. Within each element of a **token map**
+is either a **key** or a **probability list**: the keys are always elements
+with even-numbered indices, while the probability lists have odd-numbered
+indices. When searching for a probability list that's assigned to a key, the
+key's index is searched for. Adding +1 to the index locates the corresponding
+probability list. Within each probability list is a structure similar to the
+token map. Instead of keys, there are **tokens**. Instead of probability lists,
+there are **weights** instead. The data structure of the markov chain allows
+you to access it with the following sequence:
+`markov_chain[order][index_of_key_or_prob_list][index_of_token_or_weight]`.
+
+Token maps, organized/grouped by order, help the code access a different set
+of probability lists. This recreates the feature of Markov chains where the
+probability of going to a certain value depends on the state that you reside
+in. When accessing a probability list to see what states can be changed into,
+the code takes its current state and looks for a key that matches its current
+state. Some keys can be "ab," "gf," "w," or "START" for example.
+
+Within a probability list, its tokens and keys are somewhat similar, but serve
+different purposes. Within a token map, its even-numbered elements serve to
+help the code identify what probabiluty list to use. On the other hand, the
+even-numbered elements in the probability list represent a random pool of
+characters that can be chosen by the code. These even-numbered elements/tokens
+have corresponding weights that tell the code how often they appear in the
+probability list compared to the other tokens. When probability lists appear
+in a markov chain, they are usually strucutred in a way such that all of the
+weights add up to 1.0.
+
+## Text
+
+
+
 # How I Developed This Project
 
 # Reflections
