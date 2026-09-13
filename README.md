@@ -6,17 +6,38 @@ patterns to generate words that could exist.
 The Markov chain analyzes the system by the letter, taking the most recent
 two letters to guess a letter that could come right after it.
 
-# About markov chains
+# How Markov Chains Work
+-# Or, at the very least, how I assumed how Markov chains worked before
+completing this project.
 
-DISCLAIMER: This is not a reputable source to learn about how Markov Chains
+## Disclaimer
+This is not a reputable source to learn about how Markov Chains
 work. I am taking what I have assumed about Markov Chains and made an attempt
 to code a word generator with them. If you want to know as much as I do about
 Markov Chains, watch
 [this video](https://www.youtube.com/watch?v=KZeIEiBrT_w) (BONUS: If you really
 want to have the same experience that I did, write down two questions every
- you feel suprised, shocked, or amazed.) I don't know where you can find a way
+ you feel suprised, shocked, or amazed). I don't know where you can find a way
 to learn more than I do about Markov Chains, but I do know that you can
 probably find someone who can point you in the right direction.
+
+## How Markov Chains Work in General
+Markov chains are models describing how likely it is for a system to change
+from state to another. When a system changes from a state to another, the state
+that it changes to will depend on the state that it was on previously. For
+example, a large cloud will be more likely to rain than a small cloud. When
+Markov chains are generated, the history of a system's changes is analyzed.
+If a certain change happened very often, the Markov chain is created such that
+a simulation utilizing the Markov chain will make that change more often.
+
+Markov Chains can be drawn using nodes and edges. The edges are not mutual, so
+if it is likely for you to jump from one node to another, it is not guaranteed
+that it will be just as likely for you to return back to the previous node.
+The edges have weights, where an edge with a higher weight will indicate that
+a change is more likely for a system starting on a particular node representing
+a certain state.
+
+## How this Markov Chain Works
 
 # notes
 
