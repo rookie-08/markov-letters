@@ -10,6 +10,32 @@ With inspiration from the following media:
 - [M J, Ashwin. "Next Word Prediction using Markov Model."](https://medium.com/ymedialabs-innovation/next-word-prediction-using-markov-model-570fc0475f96)
 - [Veritasium. "The Strange Math that Predicts (Almost) Anything."](https://www.youtube.com/watch?v=KZeIEiBrT_w)
 
+# How to Use
+
+1. Install `python` to use in the terminal if it isn't installed already.
+
+2. Download the repository as a folder on your computer.
+
+3. Open a new terminal, preferably a bash terminal like Git.
+
+4. Change into the folder/directory's path using the `cd` in the terminal.
+
+5. Run the following command: `python markov.py`
+
+6. The program will prompt you, multiple times, to type in one of the following:
+
+    - `tofile`: Saves the Markov chain to a file.
+
+    - `fromfile`: Loads a Markov chain from a file.
+
+    - `make`: Creates a Markov chain by analyzing a file.
+
+    - `use`: Uses the Markov chain to generate a word using prediction.
+
+    - `exit`: Continues with the rest of the program (ends the program).
+
+    - If you type nothing and enter, it will be equivalent to typing `use`.
+
 # Background: How Markov Chains Work
 -# Or, at the very least, how I assumed how Markov chains worked before
 completing this project.
@@ -92,11 +118,42 @@ characters that can be chosen by the code. These even-numbered elements/tokens
 have corresponding weights that tell the code how often they appear in the
 probability list compared to the other tokens. When probability lists appear
 in a markov chain, they are usually strucutred in a way such that all of the
-weights add up to 1.0.
+weights add up to 1.0. Some tokens can be "END," which finishes a word.
 
 ## Text
 
+It takes about a minute or two to generate a Markov Chain when analyzing the
+file `words.txt`, which has approximately 466k lines of code. Storing the
+Markov Chain in a file helps save time. The data will be encoded as a `.txt`
+file. The following rules are used when encoding data:
 
+- Each token map of a markov chain is separated by lines that start with
+hashtags.
+- Each element of a token map has its own individual line. This includes the
+probability lists, which are concatenated by spaces.
+
+For reference, this is what a Markov Chain stored as a file could look like.
+`...` denotes repetitive information.
+
+```
+# ORDER 0
+START
+a 0.023 b 0.034 c 0.068 ...
+# ORDER 1
+a
+a 0.023 b 0.034 c 0.068 ...
+b
+a 0.023 b 0.034 c 0.068 ...
+...
+# ORDER 2
+aa
+a 0.023 b 0.034 c 0.068 ...
+ab
+a 0.023 b 0.034 c 0.068 ...
+ac
+a 0.023 b 0.034 c 0.068 ...
+...
+```
 
 # How I Developed This Project
 
@@ -106,12 +163,7 @@ weights add up to 1.0.
 
 - This is probably formatted wrong and doesn't consider the right audience
 
-# notes
-
-- To do:
-
-    - Explain the code behind this markov chain
-
+# To Do
     - Explain the software engineering skills I learned/practiced
 
     - Explain how I developed the project (top-down, bottom-up, unit tests)
@@ -129,67 +181,3 @@ weights add up to 1.0.
     - Do I add `markov_data` to gitignore?
 
     - Add user manual
-
-- How a probability list is stored
-    
-    - Stored as a list
-
-    - Even-numbered indices `[0], [2], ...` have a token element `"k"`
-
-    - The element following a token element is its weighted probability `0.02`
-
-    - The sum of a probability list's weighted probabilities should be `1.0`
-
-    - A token can be `"END"`, which causes the markov chain to terminate
-
-- How a token map is stored
-
-    - Stored as a list
-
-    - Even-numbered indices `[0], [2], ...` have a token element `"s" or "sc"`
-
-    - The element following a token element is a unique probability table
-
-- How a markov chain is stored
-
-    - Stored as a list
-
-    - `markov[0]`: A probability list of starting tokens.
-
-    - `markov[1]`: A probability list of first-order tokens (i.e. the second character of a word).
-
-    - `markov[2]`: A probability list of second-order tokens.
-
-- How a markov chain is written
-
-    - `# TEXT` Serves as a flag to help adjust the code's behavior as it reads the text
-
-    - Probability lists are stored on a linear line
-
-    - Token maps are stored on different lines; each line is an element
-
-    - For the following example, these will appear (but not in the actual .txt file):
-
-        - `//` serves as an artificial comment line
-
-        - `...` denotes redundant information
-
-    ```
-    # ORDER 0
-    START
-    a 0.023 b 0.034 c 0.068 ...
-    # ORDER 1
-    a
-    a 0.023 b 0.034 c 0.068 ...
-    b
-    a 0.023 b 0.034 c 0.068 ...
-    ...
-    # ORDER 2
-    aa
-    a 0.023 b 0.034 c 0.068 ...
-    ab
-    a 0.023 b 0.034 c 0.068 ...
-    ac
-    a 0.023 b 0.034 c 0.068 ...
-    ...
-    ```
