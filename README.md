@@ -157,6 +157,24 @@ a 0.023 b 0.034 c 0.068 ...
 
 # How I Developed This Project
 
+**My skills**
+
+Before starting this project, I had a surface-level understanding of how Markov
+Chains work. I have about two months of experience with Python, but I also had
+a year or two of experience with Java and Lua to help me get into habits and
+ways of thinking that help me code more effectively. I was taught how to use
+Git, Gitlab, and Github this year, so I was able to start making respositories
+like this one to show off my projects. I was also taught about the habit of
+writing commit messages, incrementing code, running unit tests with Pytest,
+and consistently pushing code.
+
+**Top-down Development**
+
+I first started off with an idea that interested me. After seeing a dataset of
+words that was available to me, I decided to use my current knowledge of Markov
+chains to attempt to write code that generates words using a random algorithm.
+
+
 # Reflections
 
 - I kind of didn't need to add orders when considering the list
