@@ -37,8 +37,9 @@ With inspiration from the following media:
     - If you type nothing and enter, it will be equivalent to typing `use`.
 
 # Background: How Markov Chains Work
--# Or, at the very least, how I assumed how Markov chains worked before
-completing this project.
+
+*Or how I assumed how Markov chains worked before
+completing this project.*
 
 TL;DR:
 - Lack of knowledge
@@ -173,29 +174,23 @@ and consistently pushing code.
 I first started off with an idea that interested me. After seeing a dataset of
 words that was available to me, I decided to use my current knowledge of Markov
 chains to attempt to write code that generates words using a random algorithm.
-
+I wrote outlines of functions I knew I needed. When the outlines needed helper
+functions, I would write the outlines of those until I didn't have any more
+outlines to write. I would then write each outlined function, as well as a few
+functions in a unit testing module to ensure that the development is going
+smoothly. Though developing, I was able to practice anticipating what I need to
+code. I was also able to practice outlining code before writing it, allowing me
+to check the design of a code before proceeding with it.
 
 # Reflections
 
-- I kind of didn't need to add orders when considering the list
-
-- This is probably formatted wrong and doesn't consider the right audience
-
-# To Do
-    - Explain the software engineering skills I learned/practiced
-
-    - Explain how I developed the project (top-down, bottom-up, unit tests)
-
-    - Create terminology to make code more coherent
-
-    - Refactor and then reorganize code (?)
-
-    - Write more tests
-
-    - Reorganize README.md
-
-    - List each file and explain how they work
-
-    - Do I add `markov_data` to gitignore?
-
-    - Add user manual
+I feel like there could be some refactoring that could be done to make the code
+look cleaner and more compact. I decided to stop developing once the product
+was functional because it was the only goal I had in mind when developing this
+prioject. With refactoring aside, I would work on improving the interface so
+the user can interact with this program more intuitively. Finally, beyond
+organizing the code, I want to make `markov.py` softcoded. Some features I want
+to consider are to be able to analyze different text files, like a list of
+names or a list of cities. I would also want to have different analysis
+options, like what orders (2nd order? 3rd order?) to use, if punctuation should
+be included, or if the analysis should be case-sensitive.
