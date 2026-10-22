@@ -10,7 +10,7 @@ With inspiration from the following media:
 - [M J, Ashwin. "Next Word Prediction using Markov Model."](https://medium.com/ymedialabs-innovation/next-word-prediction-using-markov-model-570fc0475f96)
 - [Veritasium. "The Strange Math that Predicts (Almost) Anything."](https://www.youtube.com/watch?v=KZeIEiBrT_w)
 
-# How to Use
+## How to Use
 
 1. Install `python` to use in the terminal if it isn't installed already.
 
@@ -36,7 +36,7 @@ With inspiration from the following media:
 
     - If you type nothing and enter, it will be equivalent to typing `use`.
 
-# Background: How Markov Chains Work
+## Background: How Markov Chains Work
 
 *Or how I assumed how Markov chains worked before
 completing this project.*
@@ -47,7 +47,7 @@ TL;DR:
 thing
 - This project's Markov Chain predicts what letter comes after the previous two
 
-## Disclaimer
+### Disclaimer
 This is not a reputable source to learn about how Markov Chains
 work. I am taking what I have assumed about Markov Chains and made an attempt
 to code a word generator with them. If you want to know as much as I do about
@@ -58,7 +58,7 @@ want to have the same experience that I did, write down two questions every
 to learn more than I do about Markov Chains, but I do know that you can
 probably find someone who can point you in the right direction.
 
-## How Markov Chains Work in General
+### How Markov Chains Work in General
 Markov chains are models describing how likely it is for a system to change
 from state to another. When a system changes from a state to another, the state
 that it changes to will depend on the state that it was on previously. For
@@ -74,7 +74,7 @@ The edges have weights, where an edge with a higher weight will indicate that
 a change is more likely for a system starting on a particular node representing
 a certain state.
 
-## How this Markov Chain Works
+### How this Markov Chain Works
 This Markov Chain behaves like a writer writing a word one letter at a time.
 The states in this chain consist of the most recent letters that were written.
 This Markov Chain is made in the "second order," (I say this to refer to the
@@ -88,9 +88,9 @@ so far. The Markov Chain also has to consider that there is an end that
 directly follows some letters. This consideration adjusts the Markov chain's
 behavior so it can successfully start and end the word.
 
-# The Code Behind This Markov Chain
+## The Code Behind This Markov Chain
 
-## Data
+### Data
 
 This markov chain will be stored as a list. Each element of the list is a
 **token map**, which is also a list. Within each element of a **token map**
@@ -121,7 +121,7 @@ probability list compared to the other tokens. When probability lists appear
 in a markov chain, they are usually strucutred in a way such that all of the
 weights add up to 1.0. Some tokens can be "END," which finishes a word.
 
-## Text
+### Text
 
 It takes about a minute or two to generate a Markov Chain when analyzing the
 file `words.txt`, which has approximately 466k lines of code. Storing the
@@ -156,9 +156,9 @@ a 0.023 b 0.034 c 0.068 ...
 ...
 ```
 
-# How I Developed This Project
+## Development
 
-**My skills**
+### My Skills
 
 Before starting this project, I had a surface-level understanding of how Markov
 Chains work. I have about two months of experience with Python, but I also had
@@ -169,7 +169,7 @@ like this one to show off my projects. I was also taught about the habit of
 writing commit messages, incrementing code, running unit tests with Pytest,
 and consistently pushing code.
 
-**Top-down Development**
+### Top-down Development
 
 I first started off with an idea that interested me. After seeing a dataset of
 words that was available to me, I decided to use my current knowledge of Markov
@@ -182,7 +182,7 @@ smoothly. Though developing, I was able to practice anticipating what I need to
 code. I was also able to practice outlining code before writing it, allowing me
 to check the design of a code before proceeding with it.
 
-# Reflections
+### Reflections
 
 I feel like there could be some refactoring that could be done to make the code
 look cleaner and more compact. I decided to stop developing once the product
