@@ -10,6 +10,8 @@ With inspiration from the following media:
 - [M J, Ashwin. "Next Word Prediction using Markov Model."](https://medium.com/ymedialabs-innovation/next-word-prediction-using-markov-model-570fc0475f96)
 - [Veritasium. "The Strange Math that Predicts (Almost) Anything."](https://www.youtube.com/watch?v=KZeIEiBrT_w)
 
+Sep 10, 2026 - Oct 22, 2026
+
 ## How to Use
 
 1. Install `python` to use in the terminal if it isn't installed already.
