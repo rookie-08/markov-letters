@@ -539,41 +539,65 @@ def main_old():
 
     print("Program complete")
 
-def main():
-	path = "words_simple"
-
+def load_markov(path):
 	path_file = path + ".txt"
-
 	path_json = path + ".kov"
-
+	# Check the existence of a cache
 	json_exists = False
 	try:
 		with open(path_json) as file:
 			json_exists = True
 	except:
 		json_exists = False
-
-	markov = None
+	# Return the cache if it exists
 	if (json_exists):
-		print("1")
-		markov_txt = ""
+		cache_contents = ""
 		with open(path_json) as file:
-			markov_txt = file.read()
-		markov = json.loads(markov_txt)
-	else:
-		print("2")
-		text = ""
-		with open(path_file) as file:
-			text = file.read()
-		markov = count_text_patterns(text)
-		markov_txt = json.dumps(markov)
-		with open(path_json, "w") as file:
-			file.write(markov_txt)
+			cache_contents = file.read()
+		return json.loads(cache_contents)
+	# Analyze the text
+	txt = ""
+	with open(path_file) as file:
+		txt = file.read()
+	output = count_text_patterns(txt)
+	# Create cache
+	cache_contents = json.dumps(output)
+	with open(path_json, "w") as file:
+		file.write(cache_contents)
 
-	print(markov)
+	return output
 
-	for i in range(10):
-		print(generate(markov, seed=i))
+def main():
+	# Intro (and load chain)
+	path = input("Choose a file to analyze: ")
+	print()
+	markov = load_markov(path)
+	print("Markov chain loaded!")
+	print()
+	print("Use these options to generate words:")
+	print(" - Type in a number to use a seed, generating the same word.")
+	print(" - Hit ENTER (or type in anything else) to generate a new word.")
+	print(" - Type 'exit' or 'end' to stop this program.")
+	print()
+
+	# Loop
+	sentinel = True
+	while (sentinel):
+		entry = input("Input: ")
+
+		try:
+			float_entry = float(entry)
+		except ValueError:
+			float_entry = None
+
+		if (entry.lower() == "end" or entry.lower() == "exit" or entry.lower == "exit()"):
+			print("Program complete!")
+			sentinel = False
+		elif not (float_entry is None):
+			print("Output: " + generate(markov, seed=float_entry))
+		else:
+			print("Output: " + generate(markov))
+		print()
 
 if (__name__ == "__main__"):
     main()
