@@ -5,6 +5,7 @@ Lets you create a second-order markov chain that can generate words.
 """
 
 import random
+import json
 
 MARKOV_CHAIN_PATH = "markov_data.txt"
 DATASET_PATH = "words.txt"
@@ -539,10 +540,40 @@ def main_old():
     print("Program complete")
 
 def main():
-	text = "apple burger create draw eat"
-	v = count_text_patterns(text)
+	path = "words_simple"
+
+	path_file = path + ".txt"
+
+	path_json = path + ".kov"
+
+	json_exists = False
+	try:
+		with open(path_json) as file:
+			json_exists = True
+	except:
+		json_exists = False
+
+	markov = None
+	if (json_exists):
+		print("1")
+		markov_txt = ""
+		with open(path_json) as file:
+			markov_txt = file.read()
+		markov = json.loads(markov_txt)
+	else:
+		print("2")
+		text = ""
+		with open(path_file) as file:
+			text = file.read()
+		markov = count_text_patterns(text)
+		markov_txt = json.dumps(markov)
+		with open(path_json, "w") as file:
+			file.write(markov_txt)
+
+	print(markov)
+
 	for i in range(10):
-		print(generate(v, seed=i))
+		print(generate(markov, seed=i))
 
 if (__name__ == "__main__"):
     main()
