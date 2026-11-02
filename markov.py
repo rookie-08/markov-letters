@@ -88,8 +88,6 @@ def count_text_patterns(text, order=2, eliminate_case=False, count_dupes=True):
 			for value_context in token_map:
 				value = token_map[value_context]
 				for value2 in value:
-					print(value_context)
-					print(value2)
 					# For each entry in a token map...
 					# Add/get a probability list
 					if (output.get(value_context) == None):
@@ -108,6 +106,53 @@ def count_text_patterns(text, order=2, eliminate_case=False, count_dupes=True):
 			sum += probability_list[val]
 		for val in probability_list:
 			probability_list[val] = probability_list[val] / sum
+
+	return output
+
+# Application
+def generate_token(probability_list):
+	"""
+	Chooses a random token from `probability_list`.
+	"""
+	a_float = random.random()   # For selecting weighted probabilities.
+	right_boundary = 0.0        # Will increase until `a_float` is strictly less than this.
+
+	for key in probability_list:
+		right_boundary += probability_list[key]
+		if (a_float < right_boundary):
+			return key
+
+    # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
+
+def generate(markov, seed=None, order=2):
+	output = ""
+
+	if (seed != None):
+		random.seed(seed)
+
+	sentinel = True
+	while (sentinel):
+		# Get context
+		context_value = "START"
+		len_output = len(output)
+		if (len_output > 0 and len_output < order):
+			context_value = "" + output
+		if (len_output >= order):
+			ind_1 = len_output
+			ind_0 = ind_1 - order
+			context_value = output[ind_0:ind_1]
+
+		# Get probability list
+		probability_list = markov[context_value]
+
+		# Pick a letter
+		token = generate_token(probability_list)
+
+		# Attach the letter to the output (or terminate if false)
+		if (token == "END"):
+			sentinel = False
+		else:
+			output += token
 
 	return output
 
@@ -363,20 +408,6 @@ def normalize_markov_chain(markov_chain):
         for odd_index in range(1, length_token_map, 2):
             normalize_probability_list(token_map[odd_index])
 
-# Application
-def generate_token(probability_list):
-    """
-    Chooses a random token from `probability_list`.
-    """
-    a_float = random.random()   # For selecting weighted probabilities.
-    right_boundary = 0.0        # Will increase until `a_float` is strictly less than this.
-
-    for odd_index in range(1, len(probability_list), 2):
-        right_boundary = right_boundary + probability_list[odd_index]
-        if (a_float < right_boundary):
-            return probability_list[odd_index - 1]
-    # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
-
 # Higher Order Actions
 def from_file(): # UNSTABLE
     """
@@ -510,7 +541,8 @@ def main_old():
 def main():
 	text = "apple burger create draw eat"
 	v = count_text_patterns(text)
-	print(v)
+	for i in range(10):
+		print(generate(v, seed=i))
 
 if (__name__ == "__main__"):
     main()
