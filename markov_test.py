@@ -186,6 +186,33 @@ def test_compare_dicts_3():
 	assert expected == actual
 
 # Tests
+def test_word_to_token_map_0():
+	# setup
+	word = ""
+	expected = {
+		"START": ["END"]
+	}
+
+	# invoke
+	actual = markov.translate_word(word)
+
+	# analyze
+	assert compare_dicts(expected, actual)
+
+def test_word_to_token_map_1():
+	# setup
+	word = "c"
+	expected = {
+		"START": ["c"],
+		"c": ["END"]
+	}
+
+	# invoke
+	actual = markov.translate_word(word)
+
+	# analyze
+	assert compare_dicts(expected, actual)
+
 def test_word_to_token_map_3():
 	# setup
 	word = "cat"
@@ -197,7 +224,22 @@ def test_word_to_token_map_3():
 	}
 
 	# invoke
-	actual = markov.word_to_token_map(word)
+	actual = markov.translate_word(word)
+
+	# analyze
+	assert compare_dicts(expected, actual)
+
+def test_word_to_token_map_5_dupe():
+	# setup
+	word = "aaaaaa"
+	expected = {
+		"START": ["a"],
+		"a": ["a"],
+		"aa": ["a", "a", "a", "a", "END"]
+	}
+
+	# invoke
+	actual = markov.translate_word(word)
 
 	# analyze
 	assert compare_dicts(expected, actual)

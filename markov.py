@@ -9,30 +9,109 @@ import random
 MARKOV_CHAIN_PATH = "markov_data.txt"
 DATASET_PATH = "words.txt"
 
-# Converting 
-def word_to_token_map(word):
+# New!
+def translate_word(word, order=2):
 	"""
-	`"cat"` => `{"START": "c", "c": "a", "ca": "t", "at": "END"}`
+	Analyzes the patterns of the character sequence in a single word.
+
+	`"cat"` => `{"START": "c",  "c": "a",  "ca": "t",  "at": "END"}`
 	"""
     
 	token_map = dict()
 
 	for i in range(len(word) + 1):
+		# The value is the current character or "END"
 		c = "END"
 		if (i < len(word)):
 			c = word[i]
-		i_rear = i - 2
+		# Get the trailing context characters (or "START")
+		i_rear = i - order
 		if (i_rear < 0):
 			i_rear = 0
 		lead = word[i_rear:i]
 		if (len(lead) == 0):
 			lead = "START"
+		# Add to the dictionary
 		if (token_map.get(lead) == None):
 			token_map[lead] = list()
 		token_map[lead].append(c)
 	
 	return token_map
 
+def translate_text(text, order=2, eliminate_case=False, count_dupes=True):
+	"""
+	Takes a large string `text` and returns all of the translations.
+
+	Does not count duplicate words.
+	"""
+	# Initialize list of words
+	output = dict()
+	words = text.split()
+	# Iterate over words
+	for word in words:
+		# Get the word, then filter it
+		used_word = word
+		if (eliminate_case):
+			used_word = word.lower()
+		# Translate word and add to entry
+		token_map = translate_word(used_word, order)
+		if (output.get(used_word) == None):
+			new_word_entry = dict()
+			new_word_entry["count"] = 1
+			new_word_entry["token_map"] = token_map
+			output[used_word] = new_word_entry
+		else:
+			if (count_dupes):
+				word_entry = output[used_word]
+				word_entry["count"] = word_entry["count"] + 1
+			
+	return output
+
+def count_text_patterns(text, order=2, eliminate_case=False, count_dupes=True):
+	"""
+	Reads the text and analyes the amount of context -> value maps that happen.
+
+	Returns a dictionary of possible context keys; each key points to
+	the probability distribution of what the next character could be.
+	"""
+	# Initialize
+	output = dict()
+
+	translations = translate_text(text, order, eliminate_case, count_dupes)
+
+	# Iterate over each entry in a token map
+	for word_key in translations:
+		word_entry = translations[word_key]
+		word_count = word_entry["count"]
+		token_map = word_entry["token_map"]
+		for _ in range(word_count):
+			for value_context in token_map:
+				value = token_map[value_context]
+				for value2 in value:
+					print(value_context)
+					print(value2)
+					# For each entry in a token map...
+					# Add/get a probability list
+					if (output.get(value_context) == None):
+						output[value_context] = dict()
+					probability_list = output[value_context]
+					# Add the value
+					if (probability_list.get(value2) == None):
+						probability_list[value2] = 0
+					probability_list[value2] = probability_list[value2] + 1
+
+	# Normalize
+	for probability_list_key in output:
+		probability_list = output[probability_list_key]
+		sum = 0
+		for val in probability_list:
+			sum += probability_list[val]
+		for val in probability_list:
+			probability_list[val] = probability_list[val] / sum
+
+	return output
+
+# Converting 
 def convert_word_to_tokens(word):
     """
     Takes a string `word` and converts it to a specific list.
@@ -397,7 +476,7 @@ def generate_string(markov_chain): # UNSTABLE
         generated_string = generated_string + new_token
         context_token = generated_string[-2] + generated_string[-1]
 
-def main():
+def main_old():
     """
     Demonstrates the capabilities of this module by giving you choices to run with.
     """
@@ -427,6 +506,11 @@ def main():
             print(MARKOV_CHAIN)
 
     print("Program complete")
+
+def main():
+	text = "apple burger create draw eat"
+	v = count_text_patterns(text)
+	print(v)
 
 if (__name__ == "__main__"):
     main()
