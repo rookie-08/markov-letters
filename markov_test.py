@@ -41,6 +41,17 @@ def compare_matching_lists(list_a, list_b):
             return False
     return True
 
+def compare_dicts(dict_a, dict_b):
+	for key in dict_a:
+		if (dict_a.get(key) != dict_b.get(key)):
+			return False
+
+	for key in dict_b:
+		if (dict_a.get(key) != dict_b.get(key)):
+			return False
+
+	return True
+
 # Metatests
 def test_search_list_for_element_abcde_d():
     # setup
@@ -126,7 +137,71 @@ def test_compare_matching_lists_4():
     # analyze
     assert expected == actual
 
+def test_compare_dicts_0():
+	# Setup
+	dict_a = {}
+	dict_b = {}
+	expected = True
+
+	# Invoke
+	actual = compare_dicts(dict_a, dict_b)
+
+	# Analyze
+	assert expected == actual
+
+def test_compare_dicts_1():
+	# Setup
+	dict_a = {"a": "art", "b": "bone"}
+	dict_b = dict(dict_a)
+	expected = True
+
+	# Invoke
+	actual = compare_dicts(dict_a, dict_b)
+
+	# Analyze
+	assert expected == actual
+
+def test_compare_dicts_2():
+	# Setup
+	dict_a = {"a": "art", "b": "bone", "c": "carbon"}
+	dict_b = {"a": "art", "b": "bone"}
+	expected = False
+
+	# Invoke
+	actual = compare_dicts(dict_a, dict_b)
+
+	# Analyze
+	assert expected == actual
+
+def test_compare_dicts_3():
+	# Setup
+	dict_a = {"a": "art", "b": "bone", "c": "carbon"}
+	dict_b = {"a": "art", "b": "bone", "d": "done"}
+	expected = False
+
+	# Invoke
+	actual = compare_dicts(dict_a, dict_b)
+
+	# Analyze
+	assert expected == actual
+
 # Tests
+def test_word_to_token_map_3():
+	# setup
+	word = "cat"
+	expected = {
+		"START": ["c"],
+		"c": ["a"],
+		"ca": ["t"],
+		"at": ["END"]
+	}
+
+	# invoke
+	actual = markov.word_to_token_map(word)
+
+	# analyze
+	assert compare_dicts(expected, actual)
+
 def test_convert_word_to_tokens_3():
     # setup
     word = "cat"

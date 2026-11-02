@@ -10,6 +10,29 @@ MARKOV_CHAIN_PATH = "markov_data.txt"
 DATASET_PATH = "words.txt"
 
 # Converting 
+def word_to_token_map(word):
+	"""
+	`"cat"` => `{"START": "c", "c": "a", "ca": "t", "at": "END"}`
+	"""
+    
+	token_map = dict()
+
+	for i in range(len(word) + 1):
+		c = "END"
+		if (i < len(word)):
+			c = word[i]
+		i_rear = i - 2
+		if (i_rear < 0):
+			i_rear = 0
+		lead = word[i_rear:i]
+		if (len(lead) == 0):
+			lead = "START"
+		if (token_map.get(lead) == None):
+			token_map[lead] = list()
+		token_map[lead].append(c)
+	
+	return token_map
+
 def convert_word_to_tokens(word):
     """
     Takes a string `word` and converts it to a specific list.
