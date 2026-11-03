@@ -7,9 +7,6 @@ Lets you create a second-order markov chain that can generate words.
 import random
 import json
 
-MARKOV_CHAIN_PATH = "markov_data.txt"
-DATASET_PATH = "words.txt"
-
 # Markov chain custom global variables
 ORDER = 2
 ELIMINATE_CASE = False
@@ -27,8 +24,8 @@ DIA_CHOOSE_FILE = "Choose a file to analyze: "
 DIA_LOAD_MARKOV = "Markov chain loaded!\n"
 DIA_INSTRUCTIONS = "Use these options to generate words:\n" + \
 	" - Type in a number to use a seed, generating the same word.\n" + \
-		" - Hit ENTER (or type in anything else) to generate a new word.\n" + \
-			" - Type 'exit' or 'end' to stop this program.\n"
+	" - Hit ENTER (or type in anything else) to generate a new word.\n" + \
+	" - Type 'exit' or 'end' to stop this program.\n"
 
 # New!
 def translate_word(word, order=ORDER):
@@ -145,7 +142,10 @@ def generate_token(probability_list):
 
     # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
 
-def generate(markov, seed=None, order=2):
+def generate(markov, seed=None, order=ORDER):
+	"""
+	Generates a word using a markov chain.
+	"""
 	output = ""
 
 	if (seed != None):
@@ -178,6 +178,11 @@ def generate(markov, seed=None, order=2):
 	return output
 
 def load_markov(path):
+	"""
+	Returns a markov chain after running analysis on text from a file.
+
+	Also stores a cache file in case the same file is loaded in the future.
+	"""
 	path_file = path + PATH_EXT_INPUT
 	path_json = path + PATH_EXT_CACHE
 	# Check the existence of a cache
@@ -206,10 +211,13 @@ def load_markov(path):
 	return output
 
 def main():
+	"""
+	Demonstrates the capabilities of this module.
+	"""
 	# Intro (and load chain)
 	path = input(DIA_CHOOSE_FILE)
 	print()
-	markov = load_markov(path)
+	markov = load_markov(path) # markov.load_markov
 	print(DIA_LOAD_MARKOV)
 	print(DIA_INSTRUCTIONS)
 
