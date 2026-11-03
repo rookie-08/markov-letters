@@ -27,7 +27,30 @@ DIA_INSTRUCTIONS = "Use these options to generate words:\n" + \
 	" - Hit ENTER (or type in anything else) to generate a new word.\n" + \
 	" - Type 'exit' or 'end' to stop this program.\n"
 
-# New!
+QUITTER_KEYS = {"exit", "exit()", "end"}
+
+# General helper functions
+def file_exists(path):
+	"""
+	Returns whether or not the file exists.
+	"""
+	try:
+		with open(path) as _:
+			return True
+	except FileNotFoundError:
+		return False
+
+def float_safe(str):
+	"""
+	Like `float()`, but returns `None` instead of throwing a
+	`ValueError` if the function fails.
+	"""
+	try:
+		return float(str)
+	except ValueError:
+		return None
+
+# Primary helper functions
 def translate_word(word, order=ORDER):
 	"""
 	Analyzes the patterns of the character sequence in a single word.
@@ -50,7 +73,7 @@ def translate_word(word, order=ORDER):
 		if (len(lead) == 0):
 			lead = CHAR_START
 		# Add to the dictionary
-		if (token_map.get(lead) == None):
+		if not (lead in token_map):
 			token_map[lead] = list()
 		token_map[lead].append(c)
 	
@@ -73,7 +96,7 @@ def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes
 			used_word = word.lower()
 		# Translate word and add to entry
 		token_map = translate_word(used_word, order)
-		if (output.get(used_word) == None):
+		if not (used_word in output):
 			new_word_entry = dict()
 			new_word_entry[KEY_COUNT] = 1
 			new_word_entry[KEY_TOKEN_MAP] = token_map
@@ -108,11 +131,11 @@ def count_text_patterns(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_
 				for value2 in value:
 					# For each entry in a token map...
 					# Add/get a probability list
-					if (output.get(value_context) == None):
+					if not (value_context in output):
 						output[value_context] = dict()
 					probability_list = output[value_context]
 					# Add the value
-					if (probability_list.get(value2) == None):
+					if not (value2 in probability_list):
 						probability_list[value2] = 0
 					probability_list[value2] = probability_list[value2] + 1
 
@@ -127,7 +150,6 @@ def count_text_patterns(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_
 
 	return output
 
-# Application
 def generate_token(probability_list):
 	"""
 	Chooses a random token from `probability_list`.
@@ -148,7 +170,7 @@ def generate(markov, seed=None, order=ORDER):
 	"""
 	output = ""
 
-	if (seed != None):
+	if (not seed):
 		random.seed(seed)
 
 	sentinel = True
@@ -224,21 +246,18 @@ def main():
 	# Loop
 	sentinel = True
 	while (sentinel):
+		# Ask for input
 		entry = input("Input: ")
-
-		try:
-			float_entry = float(entry)
-		except ValueError:
-			float_entry = None
-
-		if (entry.lower() == "end" or entry.lower() == "exit" or entry.lower == "exit()"):
-			print("Program complete!")
+		# Interpret input
+		float_entry = float_safe(entry)
+		if (entry.lower() in QUITTER_KEYS):
 			sentinel = False
-		elif not (float_entry is None):
+		elif not (float_entry):
 			print("Output: " + generate(markov, seed=float_entry))
 		else:
 			print("Output: " + generate(markov))
 		print()
+	print("Program complete!")
 
 if (__name__ == "__main__"):
     main()
