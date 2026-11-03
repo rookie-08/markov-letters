@@ -9,11 +9,12 @@ import json
 
 # Markov chain custom global variables
 ORDER = 2
-ELIMINATE_CASE = False
+IGNORE_CASE = False
 COUNT_DUPES = False
 
-CHAR_START = "START"
-CHAR_END = "END"
+CHAR_START = "__START__"
+CHAR_END = "__END__"
+CHAR_ORDER = "__ORDER__"
 KEY_COUNT = "pathmap_count"
 KEY_PATHMAP = "pathmap"
 
@@ -21,6 +22,7 @@ PATH_EXT_INPUT = ".txt"
 PATH_EXT_CACHE = ".kov"
 
 DIA_CHOOSE_FILE = "Choose a file to analyze: "
+DIA_CHOOSE_FILE_AGAIN = "Invalid path. Try again: "
 DIA_LOAD_MARKOV = "Markov chain loaded!\n"
 DIA_INSTRUCTIONS = "Use these options to generate words:\n" + \
 	" - Type in a number to use a seed, generating the same word.\n" + \
@@ -30,7 +32,7 @@ DIA_INSTRUCTIONS = "Use these options to generate words:\n" + \
 QUITTER_KEYS = {"exit", "exit()", "end"}
 
 # General helper functions
-def file_exists(path):
+def _file_exists(path):
 	"""
 	Returns whether or not the file exists.
 	"""
@@ -40,7 +42,7 @@ def file_exists(path):
 	except FileNotFoundError:
 		return False
 
-def float_safe(str):
+def _float_safe(str):
 	"""
 	Like `float()`, but returns `None` instead of throwing a
 	`ValueError` if the function fails.
@@ -50,8 +52,27 @@ def float_safe(str):
 	except ValueError:
 		return None
 
+def _choose_from_prob(prob_dict):
+	"""
+	Chooses a key from a dictionary representing a probability distribution.
+
+	Each key has a float value. The sum of all float values in this dictionary
+	should be 1.0. A key will be returned more frequently if its paired value
+	is higher.
+
+	`{"a": 0.2, "b": 0.8}` => "b" 80% of the time, and "a" 20% of the time.
+	"""
+
+	x_r = random.random()	# For selecting weighted probabilities.
+	x = 0.0					# Will increase until `x_r` is strictly less than this.
+
+	for k, v in prob_dict.items():
+		x += v
+		if (x > x_r):		# Return first key that exceeds `x_r`
+			return k
+
 # Primary helper functions
-def translate_word(word, order=ORDER):
+def _translate_word(word, order=ORDER):
 	"""
 	Analyzes the character sequence of a single word.
 
@@ -76,14 +97,16 @@ def translate_word(word, order=ORDER):
 	# Return
 	return pathmap
 
-def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes=COUNT_DUPES):
+def _translate_text(text, order=ORDER, eliminate_case=IGNORE_CASE, count_dupes=COUNT_DUPES):
 	"""
 	Analyzes a string of multiple words `text` and assigns a
 	pathmap to each one of them.
 
-	Returns a dictionary. Its keys are the words that it encounters.
-	The values are a sub-dictionary that has both the number of words
-	it came across and the pathmap of the word.
+	Returns a dictionary:
+	- The keys are the words that it encounters.
+	- The values are a sub-dictionary:
+		- Has the number of times the corresponding key was counted
+		- Has the pathmap of the corresponding key
 	"""
 	# Initialize list of words
 	pathmap_dict = dict()
@@ -93,7 +116,7 @@ def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes
 		# Get the word, then filter it
 		used_word = word if not eliminate_case else word.lower()
 		# Translate word and add to entry
-		pathmap = translate_word(used_word, order)
+		pathmap = _translate_word(used_word, order)
 		if not (used_word in pathmap_dict):
 			new_word_entry = dict()
 			new_word_entry[KEY_COUNT] = 1
@@ -106,31 +129,38 @@ def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes
 			
 	return pathmap_dict
 
-def count_text_patterns(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes=COUNT_DUPES):
+def _analyze_text(text, order=ORDER, eliminate_case=IGNORE_CASE, count_dupes=COUNT_DUPES):
 	"""
 	Analyzes a String of words `text`, and creates a probabilistic model for
 	all of the current states and their next states.
 
-	Returns a dictionary. The keys represent all of the current states found
-	in the `translate_text()` analysis. The values contain a dictionary
-	representing how frequently a certain next state will occur given a
-	current state. Each key in the sub-dictionary is a next state, while a
-	value in the sub-dictionary is a float. The sum of the values in the
+	Returns a dictionary:
+	- The keys represent all of the current states found in the
+	`translate_text()` analysis. 
+	- The values contain a sub-dictionary representing how frequently
+	a certain next state will occur (a probability distribution).
+		- Each key in the sub-dictionary is a next state.
+		- A value in the sub-dictionary is a float. The sum of the values in the
 	sub-dictionary is 1.0.
 	"""
 	# Initialize
 	markov_dict = dict()
-	pathmap_dict = translate_text(text, order, eliminate_case, count_dupes)
+	pathmap_dict = _translate_text(text, order, eliminate_case, count_dupes)
 
 	# Create `cur_state`-`next_state` pairs
-	cur_next_pairs = list()
-	for pathmap_raw in pathmap_dict.values():
-		pathmap = pathmap_raw[KEY_PATHMAP]
-		for _ in range(pathmap_raw[KEY_COUNT]):
-			for cur_state in pathmap:
-				for next_state in pathmap[cur_state]:
-					cur_next_pair = (cur_state, next_state)
-					cur_next_pairs.append(cur_next_pair)
+	# Extract pathmaps from `pathmap_dict`
+	pathmap_list = [
+		pathmap_raw[KEY_PATHMAP]
+		for pathmap_raw in pathmap_dict.values()
+		for _ in range(pathmap_raw[KEY_COUNT])
+	]
+	# Create pairs
+	cur_next_pairs = [
+		(cur_state, next_state)
+		for pathmap in pathmap_list
+		for cur_state, next_state_list in pathmap.items()
+		for next_state in next_state_list
+	]
 	
 	# Iterate over each recorded `cur_state`-`next_state` pair
 	for cur_next_pair in cur_next_pairs:
@@ -154,27 +184,18 @@ def count_text_patterns(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_
 		for val in probability_list:
 			probability_list[val] = probability_list[val] / sum
 
+	markov_dict[CHAR_ORDER] = order
+
 	return markov_dict
 
-def generate_token(probability_list):
+# If you are importing, please use these functions
+def generate(markov, seed=None):
 	"""
-	Chooses a random token from `probability_list`.
-	"""
-	a_float = random.random()   # For selecting weighted probabilities.
-	right_boundary = 0.0        # Will increase until `a_float` is strictly less than this.
-
-	for key in probability_list:
-		right_boundary += probability_list[key]
-		if (a_float < right_boundary):
-			return key
-
-    # assert False, "Given float " + str(a_float) + " and boundary " + str(right_boundary) + ", something happened"
-
-def generate(markov, seed=None, order=ORDER):
-	"""
-	Generates a word using a markov chain.
+	Generates a word using a `markov` chain.
 	"""
 	output = ""
+
+	order = markov[CHAR_ORDER]
 
 	if (not seed):
 		random.seed(seed)
@@ -189,7 +210,7 @@ def generate(markov, seed=None, order=ORDER):
 		probability_list = markov[cur_state]
 
 		# Pick a letter
-		token = generate_token(probability_list)
+		token = _choose_from_prob(probability_list)
 
 		# Attach the letter to the output (or terminate if false)
 		if (token == CHAR_END):
@@ -199,7 +220,7 @@ def generate(markov, seed=None, order=ORDER):
 
 	return output
 
-def load_markov(path):
+def load(path):
 	"""
 	Returns a markov chain after running analysis on text from a file.
 
@@ -208,12 +229,7 @@ def load_markov(path):
 	path_file = path + PATH_EXT_INPUT
 	path_json = path + PATH_EXT_CACHE
 	# Check the existence of a cache
-	json_exists = False
-	try:
-		with open(path_json) as file:
-			json_exists = True
-	except:
-		json_exists = False
+	json_exists = _file_exists(path_json)
 	# Return the cache if it exists
 	if (json_exists):
 		cache_contents = ""
@@ -224,7 +240,7 @@ def load_markov(path):
 	txt = ""
 	with open(path_file) as file:
 		txt = file.read()
-	output = count_text_patterns(txt)
+	output = _analyze_text(txt)
 	# Create cache
 	cache_contents = json.dumps(output)
 	with open(path_json, "w") as file:
@@ -239,19 +255,24 @@ def main():
 	# Intro (and load chain)
 	path = input(DIA_CHOOSE_FILE)
 	print()
-	markov = load_markov(path) # markov.load_markov
+	sentinel_file = not _file_exists(path + PATH_EXT_INPUT)
+	while sentinel_file:
+		path = input(DIA_CHOOSE_FILE_AGAIN)
+		print()
+		sentinel_file = not _file_exists(path + PATH_EXT_INPUT)
+	markov = load(path) # markov.load_markov
 	print(DIA_LOAD_MARKOV)
 	print(DIA_INSTRUCTIONS)
 
 	# Loop
-	sentinel = True
-	while (sentinel):
+	sentinel_generation = True
+	while (sentinel_generation):
 		# Ask for input
 		entry = input("Input: ")
 		# Interpret input
-		float_entry = float_safe(entry)
+		float_entry = _float_safe(entry)
 		if (entry.lower() in QUITTER_KEYS):
-			sentinel = False
+			sentinel_generation = False
 		elif not (float_entry):
 			print("Output: " + generate(markov, seed=float_entry))
 		else:
