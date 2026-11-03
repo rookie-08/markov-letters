@@ -14,8 +14,8 @@ COUNT_DUPES = False
 
 CHAR_START = "START"
 CHAR_END = "END"
-KEY_COUNT = "count"
-KEY_TOKEN_MAP = "token_map"
+KEY_COUNT = "pathmap_count"
+KEY_PATHMAP = "pathmap"
 
 PATH_EXT_INPUT = ".txt"
 PATH_EXT_CACHE = ".kov"
@@ -53,93 +53,108 @@ def float_safe(str):
 # Primary helper functions
 def translate_word(word, order=ORDER):
 	"""
-	Analyzes the patterns of the character sequence in a single word.
+	Analyzes the character sequence of a single word.
+
+	Returns a path-map, represented as a dictionary. Each key 
+	is each current state in the word, and each value is the next
+	state in the word. The current state's next state(s) are what
+	the next letter is in the word.
 
 	`"cat"` => `{<CHAR_START>: ["c"],  "c": ["a"],  "ca": ["t"],  "at": [<CHAR_END>]}`
 	"""
 	# Initialize
-	token_map = dict()
-	# Iterate over each character
+	pathmap = dict()
 	for i in range(len(word) + 1):
 		# Read the current character or <CHAR_END>
 		next_state = CHAR_END if (i >= len(word)) else word[i]
 		# Get the `order` previous characters or <CHAR_START>
 		cur_state = word[max(i - order, 0):i] if ((i - max(i - order, 0) > 0)) else CHAR_START
 		# Add to the dictionary
-		if not (cur_state in token_map):
-			token_map[cur_state] = list()
-		token_map[cur_state].append(next_state)
+		if not (cur_state in pathmap):
+			pathmap[cur_state] = list()
+		pathmap[cur_state].append(next_state)
 	# Return
-	return token_map
+	return pathmap
 
 def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes=COUNT_DUPES):
 	"""
-	Takes a large string `text` and returns all of the translations.
+	Analyzes a string of multiple words `text` and assigns a
+	pathmap to each one of them.
 
-	Does not count duplicate words.
+	Returns a dictionary. Its keys are the words that it encounters.
+	The values are a sub-dictionary that has both the number of words
+	it came across and the pathmap of the word.
 	"""
 	# Initialize list of words
-	output = dict()
+	pathmap_dict = dict()
 	words = text.split()
 	# Iterate over words
 	for word in words:
 		# Get the word, then filter it
 		used_word = word if not eliminate_case else word.lower()
 		# Translate word and add to entry
-		token_map = translate_word(used_word, order)
-		if not (used_word in output):
+		pathmap = translate_word(used_word, order)
+		if not (used_word in pathmap_dict):
 			new_word_entry = dict()
 			new_word_entry[KEY_COUNT] = 1
-			new_word_entry[KEY_TOKEN_MAP] = token_map
-			output[used_word] = new_word_entry
+			new_word_entry[KEY_PATHMAP] = pathmap
+			pathmap_dict[used_word] = new_word_entry
 		else:
 			if (count_dupes):
-				word_entry = output[used_word]
+				word_entry = pathmap_dict[used_word]
 				word_entry[KEY_COUNT] = word_entry[KEY_COUNT] + 1
 			
-	return output
+	return pathmap_dict
 
 def count_text_patterns(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes=COUNT_DUPES):
 	"""
-	Reads the text and analyes the amount of context -> value maps that happen.
+	Analyzes a String of words `text`, and creates a probabilistic model for
+	all of the current states and their next states.
 
-	Returns a dictionary of possible context keys; each key points to
-	the probability distribution of what the next character could be.
+	Returns a dictionary. The keys represent all of the current states found
+	in the `translate_text()` analysis. The values contain a dictionary
+	representing how frequently a certain next state will occur given a
+	current state. Each key in the sub-dictionary is a next state, while a
+	value in the sub-dictionary is a float. The sum of the values in the
+	sub-dictionary is 1.0.
 	"""
 	# Initialize
-	output = dict()
+	markov_dict = dict()
+	pathmap_dict = translate_text(text, order, eliminate_case, count_dupes)
 
-	translations = translate_text(text, order, eliminate_case, count_dupes)
-
-	# Iterate over each entry in a token map
-	for word_key in translations:
-		word_entry = translations[word_key]
-		word_count = word_entry[KEY_COUNT]
-		token_map = word_entry[KEY_TOKEN_MAP]
-		for _ in range(word_count):
-			for value_context in token_map:
-				value = token_map[value_context]
-				for value2 in value:
-					# For each entry in a token map...
-					# Add/get a probability list
-					if not (value_context in output):
-						output[value_context] = dict()
-					probability_list = output[value_context]
-					# Add the value
-					if not (value2 in probability_list):
-						probability_list[value2] = 0
-					probability_list[value2] = probability_list[value2] + 1
+	# Create `cur_state`-`next_state` pairs
+	cur_next_pairs = list()
+	for pathmap_raw in pathmap_dict.values():
+		pathmap = pathmap_raw[KEY_PATHMAP]
+		for _ in range(pathmap_raw[KEY_COUNT]):
+			for cur_state in pathmap:
+				for next_state in pathmap[cur_state]:
+					cur_next_pair = (cur_state, next_state)
+					cur_next_pairs.append(cur_next_pair)
+	
+	# Iterate over each recorded `cur_state`-`next_state` pair
+	for cur_next_pair in cur_next_pairs:
+		cur_state = cur_next_pair[0]
+		next_state = cur_next_pair[1]
+		# Add/get a probability list
+		if not (cur_state in markov_dict):
+			markov_dict[cur_state] = dict()
+		probability_list = markov_dict[cur_state]
+		# Add the value
+		if not (next_state in probability_list):
+			probability_list[next_state] = 0
+		probability_list[next_state] = probability_list[next_state] + 1
 
 	# Normalize
-	for probability_list_key in output:
-		probability_list = output[probability_list_key]
+	for probability_list_key in markov_dict:
+		probability_list = markov_dict[probability_list_key]
 		sum = 0
 		for val in probability_list:
 			sum += probability_list[val]
 		for val in probability_list:
 			probability_list[val] = probability_list[val] / sum
 
-	return output
+	return markov_dict
 
 def generate_token(probability_list):
 	"""
@@ -166,18 +181,12 @@ def generate(markov, seed=None, order=ORDER):
 
 	sentinel = True
 	while (sentinel):
-		# Get context
-		context_value = CHAR_START
+		# Get cur_state
 		len_output = len(output)
-		if (len_output > 0 and len_output < order):
-			context_value = "" + output
-		if (len_output >= order):
-			ind_1 = len_output
-			ind_0 = ind_1 - order
-			context_value = output[ind_0:ind_1]
+		cur_state = output[len_output - order:len_output] if (len_output >= order) else (output if (len_output > 0) else CHAR_START)
 
 		# Get probability list
-		probability_list = markov[context_value]
+		probability_list = markov[cur_state]
 
 		# Pick a letter
 		token = generate_token(probability_list)
