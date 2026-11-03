@@ -55,28 +55,21 @@ def translate_word(word, order=ORDER):
 	"""
 	Analyzes the patterns of the character sequence in a single word.
 
-	`"cat"` => `{<CHAR_START>: "c",  "c": "a",  "ca": "t",  "at": <CHAR_END>}`
+	`"cat"` => `{<CHAR_START>: ["c"],  "c": ["a"],  "ca": ["t"],  "at": [<CHAR_END>]}`
 	"""
-    
+	# Initialize
 	token_map = dict()
-
+	# Iterate over each character
 	for i in range(len(word) + 1):
-		# The value is the current character or <CHAR_END>
-		c = CHAR_END
-		if (i < len(word)):
-			c = word[i]
-		# Get the trailing context characters (or <CHAR_START>)
-		i_rear = i - order
-		if (i_rear < 0):
-			i_rear = 0
-		lead = word[i_rear:i]
-		if (len(lead) == 0):
-			lead = CHAR_START
+		# Read the current character or <CHAR_END>
+		next_state = CHAR_END if (i >= len(word)) else word[i]
+		# Get the `order` previous characters or <CHAR_START>
+		cur_state = word[max(i - order, 0):i] if ((i - max(i - order, 0) > 0)) else CHAR_START
 		# Add to the dictionary
-		if not (lead in token_map):
-			token_map[lead] = list()
-		token_map[lead].append(c)
-	
+		if not (cur_state in token_map):
+			token_map[cur_state] = list()
+		token_map[cur_state].append(next_state)
+	# Return
 	return token_map
 
 def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes=COUNT_DUPES):
@@ -91,9 +84,7 @@ def translate_text(text, order=ORDER, eliminate_case=ELIMINATE_CASE, count_dupes
 	# Iterate over words
 	for word in words:
 		# Get the word, then filter it
-		used_word = word
-		if (eliminate_case):
-			used_word = word.lower()
+		used_word = word if not eliminate_case else word.lower()
 		# Translate word and add to entry
 		token_map = translate_word(used_word, order)
 		if not (used_word in output):
